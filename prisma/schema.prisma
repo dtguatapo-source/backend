@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EstadoMedicamento {
+  DISPONIBLE
+  AGOTADO
+  VENCIDO
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  purchases Purchase[]
+  sales     Sale[]
+
+  @@map("users")
+}
+
+model Medicine {
+  id            String            @id
+  name          String
+  laboratory    String
+  category      String?
+  description   String
+  keywords      String?
+  stock         Int
+  purchasePrice Decimal           @db.Decimal(10, 2)
+  salePrice     Decimal           @db.Decimal(10, 2)
+  status        EstadoMedicamento
+
+  purchaseItems PurchaseItem[]
+  saleItems     SaleItem[]
+
+  @@map("medicines")
+}
+
+model Customer {
+  id       Int    @id @default(autoincrement())
+  name     String
+  idNumber String @map("idNumber")
+
+  sales Sale[]
+
+  @@map("customers")
+}
+
+model Purchase {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @map("user_id")
+  invoiceNumber String
+  provider      String
+  date          DateTime  @db.Date
+  createdAt     DateTime? @default(now()) @map("created_at")
+
+  user  User           @relation(fields: [userId], references: [id])
+  items PurchaseItem[]
+
+  @@map("purchases")
+}
+
+model PurchaseItem {
+  id            Int      @id @default(autoincrement())
+  purchaseId    Int      @map("purchase_id")
+  medicineId    String
+  quantity      Int
+  purchasePrice Decimal  @db.Decimal(10, 2)
+  salePrice     Decimal  @db.Decimal(10, 2)
+  expiryDate    DateTime @db.Date
+  total         Decimal  @db.Decimal(10, 2)
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+  medicine Medicine @relation(fields: [medicineId], references: [id])
+
+  @@map("purchase_items")
+}
+
+model Sale {
+  id               Int       @id @default(autoincrement())
+  userId           Int       @map("user_id")
+  customerId       Int?      @map("customer_id")
+  customerName     String?   @map("customer_name")
+  customerIdNumber String?   @map("customer_idNumber")
+  date             DateTime? @default(now())
+  discount         Decimal?  @db.Decimal(10, 2)
+  total            Decimal   @db.Decimal(10, 2)
+
+  user     User       @relation(fields: [userId], references: [id])
+  customer Customer?  @relation(fields: [customerId], references: [id])
+  items    SaleItem[]
+
+  @@map("sales")
+}
+
+model SaleItem {
+  id         Int     @id @default(autoincrement())
+  saleId     Int     @map("sale_id")
+  medicineId String
+  quantity   Int
+  unitPrice  Decimal @db.Decimal(10, 2)
+  subtotal   Decimal @db.Decimal(10, 2)
+
+  sale     Sale     @relation(fields: [saleId], references: [id])
+  medicine Medicine @relation(fields: [medicineId], references: [id])
+
+  @@map("sale_items")
+}

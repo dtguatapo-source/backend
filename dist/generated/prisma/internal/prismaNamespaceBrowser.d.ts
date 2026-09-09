@@ -14,6 +14,7 @@ export declare const ModelName: {
     readonly User: "User";
     readonly Medicine: "Medicine";
     readonly Customer: "Customer";
+    readonly Supplier: "Supplier";
     readonly Purchase: "Purchase";
     readonly PurchaseItem: "PurchaseItem";
     readonly Sale: "Sale";
@@ -53,11 +54,22 @@ export declare const CustomerScalarFieldEnum: {
     readonly idNumber: "idNumber";
 };
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum];
+export declare const SupplierScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly nit: "nit";
+    readonly phone: "phone";
+    readonly email: "email";
+    readonly address: "address";
+    readonly createdAt: "createdAt";
+};
+export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum];
 export declare const PurchaseScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
-    readonly invoiceNumber: "invoiceNumber";
+    readonly supplierId: "supplierId";
     readonly provider: "provider";
+    readonly invoiceNumber: "invoiceNumber";
     readonly date: "date";
     readonly createdAt: "createdAt";
 };

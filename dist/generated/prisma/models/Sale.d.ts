@@ -128,7 +128,7 @@ export type SaleGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 };
 export type SaleGroupByOutputType = {
     id: number;
-    userId: number;
+    userId: number | null;
     customerId: number | null;
     customerName: string | null;
     customerIdNumber: string | null;
@@ -149,20 +149,20 @@ export type SaleWhereInput = {
     OR?: Prisma.SaleWhereInput[];
     NOT?: Prisma.SaleWhereInput | Prisma.SaleWhereInput[];
     id?: Prisma.IntFilter<"Sale"> | number;
-    userId?: Prisma.IntFilter<"Sale"> | number;
+    userId?: Prisma.IntNullableFilter<"Sale"> | number | null;
     customerId?: Prisma.IntNullableFilter<"Sale"> | number | null;
     customerName?: Prisma.StringNullableFilter<"Sale"> | string | null;
     customerIdNumber?: Prisma.StringNullableFilter<"Sale"> | string | null;
     date?: Prisma.DateTimeNullableFilter<"Sale"> | Date | string | null;
     discount?: Prisma.DecimalNullableFilter<"Sale"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total?: Prisma.DecimalFilter<"Sale"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null;
     customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null;
     items?: Prisma.SaleItemListRelationFilter;
 };
 export type SaleOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
-    userId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrderInput | Prisma.SortOrder;
     customerId?: Prisma.SortOrderInput | Prisma.SortOrder;
     customerName?: Prisma.SortOrderInput | Prisma.SortOrder;
     customerIdNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
@@ -178,20 +178,20 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
     AND?: Prisma.SaleWhereInput | Prisma.SaleWhereInput[];
     OR?: Prisma.SaleWhereInput[];
     NOT?: Prisma.SaleWhereInput | Prisma.SaleWhereInput[];
-    userId?: Prisma.IntFilter<"Sale"> | number;
+    userId?: Prisma.IntNullableFilter<"Sale"> | number | null;
     customerId?: Prisma.IntNullableFilter<"Sale"> | number | null;
     customerName?: Prisma.StringNullableFilter<"Sale"> | string | null;
     customerIdNumber?: Prisma.StringNullableFilter<"Sale"> | string | null;
     date?: Prisma.DateTimeNullableFilter<"Sale"> | Date | string | null;
     discount?: Prisma.DecimalNullableFilter<"Sale"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total?: Prisma.DecimalFilter<"Sale"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null;
     customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null;
     items?: Prisma.SaleItemListRelationFilter;
 }, "id">;
 export type SaleOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
-    userId?: Prisma.SortOrder;
+    userId?: Prisma.SortOrderInput | Prisma.SortOrder;
     customerId?: Prisma.SortOrderInput | Prisma.SortOrder;
     customerName?: Prisma.SortOrderInput | Prisma.SortOrder;
     customerIdNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
@@ -209,7 +209,7 @@ export type SaleScalarWhereWithAggregatesInput = {
     OR?: Prisma.SaleScalarWhereWithAggregatesInput[];
     NOT?: Prisma.SaleScalarWhereWithAggregatesInput | Prisma.SaleScalarWhereWithAggregatesInput[];
     id?: Prisma.IntWithAggregatesFilter<"Sale"> | number;
-    userId?: Prisma.IntWithAggregatesFilter<"Sale"> | number;
+    userId?: Prisma.IntNullableWithAggregatesFilter<"Sale"> | number | null;
     customerId?: Prisma.IntNullableWithAggregatesFilter<"Sale"> | number | null;
     customerName?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null;
     customerIdNumber?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null;
@@ -223,13 +223,13 @@ export type SaleCreateInput = {
     date?: Date | string | null;
     discount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total: runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user: Prisma.UserCreateNestedOneWithoutSalesInput;
+    user?: Prisma.UserCreateNestedOneWithoutSalesInput;
     customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput;
     items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput;
 };
 export type SaleUncheckedCreateInput = {
     id?: number;
-    userId: number;
+    userId?: number | null;
     customerId?: number | null;
     customerName?: string | null;
     customerIdNumber?: string | null;
@@ -244,13 +244,13 @@ export type SaleUpdateInput = {
     date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     discount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user?: Prisma.UserUpdateOneRequiredWithoutSalesNestedInput;
+    user?: Prisma.UserUpdateOneWithoutSalesNestedInput;
     customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput;
     items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput;
 };
 export type SaleUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    userId?: Prisma.IntFieldUpdateOperationsInput | number;
+    userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     customerIdNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -261,7 +261,7 @@ export type SaleUncheckedUpdateInput = {
 };
 export type SaleCreateManyInput = {
     id?: number;
-    userId: number;
+    userId?: number | null;
     customerId?: number | null;
     customerName?: string | null;
     customerIdNumber?: string | null;
@@ -278,7 +278,7 @@ export type SaleUpdateManyMutationInput = {
 };
 export type SaleUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    userId?: Prisma.IntFieldUpdateOperationsInput | number;
+    userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     customerIdNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -425,13 +425,6 @@ export type NullableDecimalFieldUpdateOperationsInput = {
     multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string;
     divide?: runtime.Decimal | runtime.DecimalJsLike | number | string;
 };
-export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
-};
 export type SaleCreateNestedOneWithoutItemsInput = {
     create?: Prisma.XOR<Prisma.SaleCreateWithoutItemsInput, Prisma.SaleUncheckedCreateWithoutItemsInput>;
     connectOrCreate?: Prisma.SaleCreateOrConnectWithoutItemsInput;
@@ -489,7 +482,7 @@ export type SaleScalarWhereInput = {
     OR?: Prisma.SaleScalarWhereInput[];
     NOT?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[];
     id?: Prisma.IntFilter<"Sale"> | number;
-    userId?: Prisma.IntFilter<"Sale"> | number;
+    userId?: Prisma.IntNullableFilter<"Sale"> | number | null;
     customerId?: Prisma.IntNullableFilter<"Sale"> | number | null;
     customerName?: Prisma.StringNullableFilter<"Sale"> | string | null;
     customerIdNumber?: Prisma.StringNullableFilter<"Sale"> | string | null;
@@ -503,12 +496,12 @@ export type SaleCreateWithoutCustomerInput = {
     date?: Date | string | null;
     discount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total: runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user: Prisma.UserCreateNestedOneWithoutSalesInput;
+    user?: Prisma.UserCreateNestedOneWithoutSalesInput;
     items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput;
 };
 export type SaleUncheckedCreateWithoutCustomerInput = {
     id?: number;
-    userId: number;
+    userId?: number | null;
     customerName?: string | null;
     customerIdNumber?: string | null;
     date?: Date | string | null;
@@ -543,12 +536,12 @@ export type SaleCreateWithoutItemsInput = {
     date?: Date | string | null;
     discount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total: runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user: Prisma.UserCreateNestedOneWithoutSalesInput;
+    user?: Prisma.UserCreateNestedOneWithoutSalesInput;
     customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput;
 };
 export type SaleUncheckedCreateWithoutItemsInput = {
     id?: number;
-    userId: number;
+    userId?: number | null;
     customerId?: number | null;
     customerName?: string | null;
     customerIdNumber?: string | null;
@@ -575,12 +568,12 @@ export type SaleUpdateWithoutItemsInput = {
     date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     discount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user?: Prisma.UserUpdateOneRequiredWithoutSalesNestedInput;
+    user?: Prisma.UserUpdateOneWithoutSalesNestedInput;
     customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput;
 };
 export type SaleUncheckedUpdateWithoutItemsInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    userId?: Prisma.IntFieldUpdateOperationsInput | number;
+    userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     customerIdNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -627,7 +620,7 @@ export type SaleUncheckedUpdateManyWithoutUserInput = {
 };
 export type SaleCreateManyCustomerInput = {
     id?: number;
-    userId: number;
+    userId?: number | null;
     customerName?: string | null;
     customerIdNumber?: string | null;
     date?: Date | string | null;
@@ -640,12 +633,12 @@ export type SaleUpdateWithoutCustomerInput = {
     date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     discount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
     total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
-    user?: Prisma.UserUpdateOneRequiredWithoutSalesNestedInput;
+    user?: Prisma.UserUpdateOneWithoutSalesNestedInput;
     items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput;
 };
 export type SaleUncheckedUpdateWithoutCustomerInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    userId?: Prisma.IntFieldUpdateOperationsInput | number;
+    userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     customerIdNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -655,7 +648,7 @@ export type SaleUncheckedUpdateWithoutCustomerInput = {
 };
 export type SaleUncheckedUpdateManyWithoutCustomerInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    userId?: Prisma.IntFieldUpdateOperationsInput | number;
+    userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     customerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     customerIdNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -683,7 +676,7 @@ export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     date?: boolean;
     discount?: boolean;
     total?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.Sale$userArgs<ExtArgs>;
     customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>;
     items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>;
     _count?: boolean | Prisma.SaleCountOutputTypeDefaultArgs<ExtArgs>;
@@ -697,7 +690,7 @@ export type SaleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     date?: boolean;
     discount?: boolean;
     total?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.Sale$userArgs<ExtArgs>;
     customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>;
 }, ExtArgs["result"]["sale"]>;
 export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -709,7 +702,7 @@ export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     date?: boolean;
     discount?: boolean;
     total?: boolean;
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.Sale$userArgs<ExtArgs>;
     customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>;
 }, ExtArgs["result"]["sale"]>;
 export type SaleSelectScalar = {
@@ -724,29 +717,29 @@ export type SaleSelectScalar = {
 };
 export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "customerId" | "customerName" | "customerIdNumber" | "date" | "discount" | "total", ExtArgs["result"]["sale"]>;
 export type SaleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.Sale$userArgs<ExtArgs>;
     customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>;
     items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>;
     _count?: boolean | Prisma.SaleCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type SaleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.Sale$userArgs<ExtArgs>;
     customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>;
 };
 export type SaleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    user?: boolean | Prisma.Sale$userArgs<ExtArgs>;
     customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>;
 };
 export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Sale";
     objects: {
-        user: Prisma.$UserPayload<ExtArgs>;
+        user: Prisma.$UserPayload<ExtArgs> | null;
         customer: Prisma.$CustomerPayload<ExtArgs> | null;
         items: Prisma.$SaleItemPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: number;
-        userId: number;
+        userId: number | null;
         customerId: number | null;
         customerName: string | null;
         customerIdNumber: string | null;
@@ -805,7 +798,7 @@ export interface SaleDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 export interface Prisma__SaleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    user<T extends Prisma.Sale$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     customer<T extends Prisma.Sale$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$customerArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     items<T extends Prisma.Sale$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
@@ -921,6 +914,12 @@ export type SaleDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type SaleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.SaleWhereInput;
     limit?: number;
+};
+export type Sale$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    where?: Prisma.UserWhereInput;
 };
 export type Sale$customerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.CustomerSelect<ExtArgs> | null;

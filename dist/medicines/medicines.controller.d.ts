@@ -28,6 +28,18 @@ export declare class MedicinesController {
         salePrice: import("@prisma/client-runtime-utils").Decimal;
         status: import("../generated/prisma/enums.js").EstadoMedicamento;
     }[]>;
+    findLowStock(): Promise<{
+        id: string;
+        name: string;
+        laboratory: string;
+        category: string | null;
+        description: string;
+        keywords: string | null;
+        stock: number;
+        purchasePrice: import("@prisma/client-runtime-utils").Decimal;
+        salePrice: import("@prisma/client-runtime-utils").Decimal;
+        status: import("../generated/prisma/enums.js").EstadoMedicamento;
+    }[]>;
     findOne(id: string): Promise<{
         id: string;
         name: string;

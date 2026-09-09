@@ -224,7 +224,7 @@ export type PurchaseItemGroupByOutputType = {
   quantity: number
   purchasePrice: runtime.Decimal
   salePrice: runtime.Decimal
-  expiryDate: Date
+  expiryDate: Date | null
   total: runtime.Decimal
   _count: PurchaseItemCountAggregateOutputType | null
   _avg: PurchaseItemAvgAggregateOutputType | null
@@ -258,7 +258,7 @@ export type PurchaseItemWhereInput = {
   quantity?: Prisma.IntFilter<"PurchaseItem"> | number
   purchasePrice?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
+  expiryDate?: Prisma.DateTimeNullableFilter<"PurchaseItem"> | Date | string | null
   total?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
   medicine?: Prisma.XOR<Prisma.MedicineScalarRelationFilter, Prisma.MedicineWhereInput>
@@ -271,7 +271,7 @@ export type PurchaseItemOrderByWithRelationInput = {
   quantity?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
-  expiryDate?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
   total?: Prisma.SortOrder
   purchase?: Prisma.PurchaseOrderByWithRelationInput
   medicine?: Prisma.MedicineOrderByWithRelationInput
@@ -287,7 +287,7 @@ export type PurchaseItemWhereUniqueInput = Prisma.AtLeast<{
   quantity?: Prisma.IntFilter<"PurchaseItem"> | number
   purchasePrice?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
+  expiryDate?: Prisma.DateTimeNullableFilter<"PurchaseItem"> | Date | string | null
   total?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
   medicine?: Prisma.XOR<Prisma.MedicineScalarRelationFilter, Prisma.MedicineWhereInput>
@@ -300,7 +300,7 @@ export type PurchaseItemOrderByWithAggregationInput = {
   quantity?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
-  expiryDate?: Prisma.SortOrder
+  expiryDate?: Prisma.SortOrderInput | Prisma.SortOrder
   total?: Prisma.SortOrder
   _count?: Prisma.PurchaseItemCountOrderByAggregateInput
   _avg?: Prisma.PurchaseItemAvgOrderByAggregateInput
@@ -319,7 +319,7 @@ export type PurchaseItemScalarWhereWithAggregatesInput = {
   quantity?: Prisma.IntWithAggregatesFilter<"PurchaseItem"> | number
   purchasePrice?: Prisma.DecimalWithAggregatesFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalWithAggregatesFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeWithAggregatesFilter<"PurchaseItem"> | Date | string
+  expiryDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseItem"> | Date | string | null
   total?: Prisma.DecimalWithAggregatesFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -327,7 +327,7 @@ export type PurchaseItemCreateInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   purchase: Prisma.PurchaseCreateNestedOneWithoutItemsInput
   medicine: Prisma.MedicineCreateNestedOneWithoutPurchaseItemsInput
@@ -340,7 +340,7 @@ export type PurchaseItemUncheckedCreateInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -348,7 +348,7 @@ export type PurchaseItemUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   purchase?: Prisma.PurchaseUpdateOneRequiredWithoutItemsNestedInput
   medicine?: Prisma.MedicineUpdateOneRequiredWithoutPurchaseItemsNestedInput
@@ -361,7 +361,7 @@ export type PurchaseItemUncheckedUpdateInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -372,7 +372,7 @@ export type PurchaseItemCreateManyInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -380,7 +380,7 @@ export type PurchaseItemUpdateManyMutationInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -391,7 +391,7 @@ export type PurchaseItemUncheckedUpdateManyInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -544,7 +544,7 @@ export type PurchaseItemCreateWithoutMedicineInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   purchase: Prisma.PurchaseCreateNestedOneWithoutItemsInput
 }
@@ -555,7 +555,7 @@ export type PurchaseItemUncheckedCreateWithoutMedicineInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -595,7 +595,7 @@ export type PurchaseItemScalarWhereInput = {
   quantity?: Prisma.IntFilter<"PurchaseItem"> | number
   purchasePrice?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
+  expiryDate?: Prisma.DateTimeNullableFilter<"PurchaseItem"> | Date | string | null
   total?: Prisma.DecimalFilter<"PurchaseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -603,7 +603,7 @@ export type PurchaseItemCreateWithoutPurchaseInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   medicine: Prisma.MedicineCreateNestedOneWithoutPurchaseItemsInput
 }
@@ -614,7 +614,7 @@ export type PurchaseItemUncheckedCreateWithoutPurchaseInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -650,7 +650,7 @@ export type PurchaseItemCreateManyMedicineInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -658,7 +658,7 @@ export type PurchaseItemUpdateWithoutMedicineInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   purchase?: Prisma.PurchaseUpdateOneRequiredWithoutItemsNestedInput
 }
@@ -669,7 +669,7 @@ export type PurchaseItemUncheckedUpdateWithoutMedicineInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -679,7 +679,7 @@ export type PurchaseItemUncheckedUpdateManyWithoutMedicineInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -689,7 +689,7 @@ export type PurchaseItemCreateManyPurchaseInput = {
   quantity: number
   purchasePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice: runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate: Date | string
+  expiryDate?: Date | string | null
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -697,7 +697,7 @@ export type PurchaseItemUpdateWithoutPurchaseInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   medicine?: Prisma.MedicineUpdateOneRequiredWithoutPurchaseItemsNestedInput
 }
@@ -708,7 +708,7 @@ export type PurchaseItemUncheckedUpdateWithoutPurchaseInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -718,7 +718,7 @@ export type PurchaseItemUncheckedUpdateManyWithoutPurchaseInput = {
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   purchasePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   salePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
@@ -801,7 +801,7 @@ export type $PurchaseItemPayload<ExtArgs extends runtime.Types.Extensions.Intern
     quantity: number
     purchasePrice: runtime.Decimal
     salePrice: runtime.Decimal
-    expiryDate: Date
+    expiryDate: Date | null
     total: runtime.Decimal
   }, ExtArgs["result"]["purchaseItem"]>
   composites: {}

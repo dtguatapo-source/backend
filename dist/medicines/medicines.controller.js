@@ -28,6 +28,9 @@ let MedicinesController = class MedicinesController {
     findAll() {
         return this.medicinesService.findAll();
     }
+    findLowStock() {
+        return this.medicinesService.findLowStock();
+    }
     findOne(id) {
         return this.medicinesService.findOne(id);
     }
@@ -52,6 +55,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], MedicinesController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('low-stock'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MedicinesController.prototype, "findLowStock", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

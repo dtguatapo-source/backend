@@ -50,4 +50,16 @@ export class MedicinesService {
       where: { id },
     });
   }
+
+
+  // 6. Consulta extra: Buscar medicamentos con bajo stock (menor o igual a 10)
+  async findLowStock() {
+    return await this.prisma.medicine.findMany({
+      where: {
+        stock: {
+          lte: 10, // lte = Less Than or Equal (Menor o igual)
+        },
+      },
+    });
+  }
 }

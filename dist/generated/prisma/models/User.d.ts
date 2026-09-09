@@ -221,9 +221,9 @@ export type UserMinOrderByAggregateInput = {
 export type UserSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
 };
-export type UserScalarRelationFilter = {
-    is?: Prisma.UserWhereInput;
-    isNot?: Prisma.UserWhereInput;
+export type UserNullableScalarRelationFilter = {
+    is?: Prisma.UserWhereInput | null;
+    isNot?: Prisma.UserWhereInput | null;
 };
 export type StringFieldUpdateOperationsInput = {
     set?: string;
@@ -243,10 +243,12 @@ export type UserCreateNestedOneWithoutPurchasesInput = {
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutPurchasesInput;
     connect?: Prisma.UserWhereUniqueInput;
 };
-export type UserUpdateOneRequiredWithoutPurchasesNestedInput = {
+export type UserUpdateOneWithoutPurchasesNestedInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutPurchasesInput, Prisma.UserUncheckedCreateWithoutPurchasesInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutPurchasesInput;
     upsert?: Prisma.UserUpsertWithoutPurchasesInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPurchasesInput, Prisma.UserUpdateWithoutPurchasesInput>, Prisma.UserUncheckedUpdateWithoutPurchasesInput>;
 };
@@ -255,10 +257,12 @@ export type UserCreateNestedOneWithoutSalesInput = {
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutSalesInput;
     connect?: Prisma.UserWhereUniqueInput;
 };
-export type UserUpdateOneRequiredWithoutSalesNestedInput = {
+export type UserUpdateOneWithoutSalesNestedInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutSalesInput, Prisma.UserUncheckedCreateWithoutSalesInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutSalesInput;
     upsert?: Prisma.UserUpsertWithoutSalesInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSalesInput, Prisma.UserUpdateWithoutSalesInput>, Prisma.UserUncheckedUpdateWithoutSalesInput>;
 };

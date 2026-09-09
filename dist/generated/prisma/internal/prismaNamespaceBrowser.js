@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.PurchaseItemScalarFieldEnum = exports.PurchaseScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.MedicineScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.SaleItemScalarFieldEnum = exports.SaleScalarFieldEnum = exports.PurchaseItemScalarFieldEnum = exports.PurchaseScalarFieldEnum = exports.SupplierScalarFieldEnum = exports.CustomerScalarFieldEnum = exports.MedicineScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -48,6 +48,7 @@ exports.ModelName = {
     User: 'User',
     Medicine: 'Medicine',
     Customer: 'Customer',
+    Supplier: 'Supplier',
     Purchase: 'Purchase',
     PurchaseItem: 'PurchaseItem',
     Sale: 'Sale',
@@ -82,11 +83,21 @@ exports.CustomerScalarFieldEnum = {
     name: 'name',
     idNumber: 'idNumber'
 };
+exports.SupplierScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    nit: 'nit',
+    phone: 'phone',
+    email: 'email',
+    address: 'address',
+    createdAt: 'createdAt'
+};
 exports.PurchaseScalarFieldEnum = {
     id: 'id',
     userId: 'userId',
-    invoiceNumber: 'invoiceNumber',
+    supplierId: 'supplierId',
     provider: 'provider',
+    invoiceNumber: 'invoiceNumber',
     date: 'date',
     createdAt: 'createdAt'
 };

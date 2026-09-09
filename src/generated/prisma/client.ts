@@ -55,6 +55,11 @@ export type Medicine = Prisma.MedicineModel
  */
 export type Customer = Prisma.CustomerModel
 /**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
  * Model Purchase
  * 
  */

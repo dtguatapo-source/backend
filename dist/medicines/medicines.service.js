@@ -47,6 +47,15 @@ let MedicinesService = class MedicinesService {
             where: { id },
         });
     }
+    async findLowStock() {
+        return await this.prisma.medicine.findMany({
+            where: {
+                stock: {
+                    lte: 10,
+                },
+            },
+        });
+    }
 };
 exports.MedicinesService = MedicinesService;
 exports.MedicinesService = MedicinesService = __decorate([

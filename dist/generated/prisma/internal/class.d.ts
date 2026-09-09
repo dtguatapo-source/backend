@@ -39,6 +39,9 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get customer(): Prisma.CustomerDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    get supplier(): Prisma.SupplierDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
     get purchase(): Prisma.PurchaseDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;

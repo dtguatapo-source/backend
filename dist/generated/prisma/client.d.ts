@@ -9,6 +9,7 @@ export { Prisma };
 export type User = Prisma.UserModel;
 export type Medicine = Prisma.MedicineModel;
 export type Customer = Prisma.CustomerModel;
+export type Supplier = Prisma.SupplierModel;
 export type Purchase = Prisma.PurchaseModel;
 export type PurchaseItem = Prisma.PurchaseItemModel;
 export type Sale = Prisma.SaleModel;

@@ -163,6 +163,7 @@ export declare const ModelName: {
     readonly User: "User";
     readonly Medicine: "Medicine";
     readonly Customer: "Customer";
+    readonly Supplier: "Supplier";
     readonly Purchase: "Purchase";
     readonly PurchaseItem: "PurchaseItem";
     readonly Sale: "Sale";
@@ -179,7 +180,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "medicine" | "customer" | "purchase" | "purchaseItem" | "sale" | "saleItem";
+        modelProps: "user" | "medicine" | "customer" | "supplier" | "purchase" | "purchaseItem" | "sale" | "saleItem";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -402,6 +403,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 count: {
                     args: Prisma.CustomerCountArgs<ExtArgs>;
                     result: runtime.Types.Utils.Optional<Prisma.CustomerCountAggregateOutputType> | number;
+                };
+            };
+        };
+        Supplier: {
+            payload: Prisma.$SupplierPayload<ExtArgs>;
+            fields: Prisma.SupplierFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.SupplierFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.SupplierFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>;
+                };
+                findFirst: {
+                    args: Prisma.SupplierFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.SupplierFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>;
+                };
+                findMany: {
+                    args: Prisma.SupplierFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>[];
+                };
+                create: {
+                    args: Prisma.SupplierCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>;
+                };
+                createMany: {
+                    args: Prisma.SupplierCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.SupplierCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>[];
+                };
+                delete: {
+                    args: Prisma.SupplierDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>;
+                };
+                update: {
+                    args: Prisma.SupplierUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.SupplierDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.SupplierUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.SupplierUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>[];
+                };
+                upsert: {
+                    args: Prisma.SupplierUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$SupplierPayload>;
+                };
+                aggregate: {
+                    args: Prisma.SupplierAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateSupplier>;
+                };
+                groupBy: {
+                    args: Prisma.SupplierGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.SupplierGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.SupplierCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.SupplierCountAggregateOutputType> | number;
                 };
             };
         };
@@ -758,11 +833,22 @@ export declare const CustomerScalarFieldEnum: {
     readonly idNumber: "idNumber";
 };
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum];
+export declare const SupplierScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly nit: "nit";
+    readonly phone: "phone";
+    readonly email: "email";
+    readonly address: "address";
+    readonly createdAt: "createdAt";
+};
+export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum];
 export declare const PurchaseScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
-    readonly invoiceNumber: "invoiceNumber";
+    readonly supplierId: "supplierId";
     readonly provider: "provider";
+    readonly invoiceNumber: "invoiceNumber";
     readonly date: "date";
     readonly createdAt: "createdAt";
 };
@@ -856,6 +942,7 @@ export type GlobalOmitConfig = {
     user?: Prisma.UserOmit;
     medicine?: Prisma.MedicineOmit;
     customer?: Prisma.CustomerOmit;
+    supplier?: Prisma.SupplierOmit;
     purchase?: Prisma.PurchaseOmit;
     purchaseItem?: Prisma.PurchaseItemOmit;
     sale?: Prisma.SaleOmit;

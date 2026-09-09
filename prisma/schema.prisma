@@ -58,49 +58,63 @@ model Customer {
 
   @@map("customers")
 }
+model Supplier {
+  id        Int      @id @default(autoincrement())
+  name      String
+  nit       String   @unique
+  phone     String?
+  email     String?
+  address   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  purchases Purchase[]
+
+  @@map("suppliers")
+}
 
 model Purchase {
-  id            Int       @id @default(autoincrement())
-  userId        Int       @map("user_id")
+  id            Int            @id @default(autoincrement())
+  userId        Int?           @map("user_id")
+  supplierId    Int?           @map("supplier_id")
+  provider      String?
   invoiceNumber String
-  provider      String
-  date          DateTime  @db.Date
-  createdAt     DateTime? @default(now()) @map("created_at")
+  date          DateTime       @db.Date
+  createdAt     DateTime?      @default(now()) @map("created_at")
 
-  user  User           @relation(fields: [userId], references: [id])
-  items PurchaseItem[]
+  user          User?          @relation(fields: [userId], references: [id])
+  supplier      Supplier?      @relation(fields: [supplierId], references: [id])
+  items         PurchaseItem[]
 
   @@map("purchases")
 }
 
 model PurchaseItem {
-  id            Int      @id @default(autoincrement())
-  purchaseId    Int      @map("purchase_id")
+  id            Int       @id @default(autoincrement())
+  purchaseId    Int       @map("purchase_id")
   medicineId    String
   quantity      Int
-  purchasePrice Decimal  @db.Decimal(10, 2)
-  salePrice     Decimal  @db.Decimal(10, 2)
-  expiryDate    DateTime @db.Date
-  total         Decimal  @db.Decimal(10, 2)
+  purchasePrice Decimal   @db.Decimal(10, 2)
+  salePrice     Decimal   @db.Decimal(10, 2)
+  expiryDate    DateTime? @db.Date // Opcional por si en la pantalla no la ingresas
+  total         Decimal   @db.Decimal(10, 2)
 
   purchase Purchase @relation(fields: [purchaseId], references: [id])
   medicine Medicine @relation(fields: [medicineId], references: [id])
 
   @@map("purchase_items")
 }
-
 model Sale {
-  id               Int       @id @default(autoincrement())
-  userId           Int       @map("user_id")
-  customerId       Int?      @map("customer_id")
-  customerName     String?   @map("customer_name")
-  customerIdNumber String?   @map("customer_idNumber")
-  date             DateTime? @default(now())
-  discount         Decimal?  @db.Decimal(10, 2)
-  total            Decimal   @db.Decimal(10, 2)
+  id               Int        @id @default(autoincrement())
+  userId           Int?       @map("user_id")
+  customerId       Int?       @map("customer_id")
+  customerName     String?    @map("customer_name")
+  customerIdNumber String?    @map("customer_idNumber")
+  date             DateTime?  @default(now())
+  discount         Decimal?   @db.Decimal(10, 2)
+  total            Decimal    @db.Decimal(10, 2)
 
-  user     User       @relation(fields: [userId], references: [id])
-  customer Customer?  @relation(fields: [customerId], references: [id])
+  user     User?     @relation(fields: [userId], references: [id])
+  customer Customer? @relation(fields: [customerId], references: [id])
   items    SaleItem[]
 
   @@map("sales")

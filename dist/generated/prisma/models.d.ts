@@ -1,6 +1,7 @@
 export type * from './models/User';
 export type * from './models/Medicine';
 export type * from './models/Customer';
+export type * from './models/Supplier';
 export type * from './models/Purchase';
 export type * from './models/PurchaseItem';
 export type * from './models/Sale';

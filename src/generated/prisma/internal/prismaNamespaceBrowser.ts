@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Medicine: 'Medicine',
   Customer: 'Customer',
+  Supplier: 'Supplier',
   Purchase: 'Purchase',
   PurchaseItem: 'PurchaseItem',
   Sale: 'Sale',
@@ -111,11 +112,25 @@ export const CustomerScalarFieldEnum = {
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
+export const SupplierScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  nit: 'nit',
+  phone: 'phone',
+  email: 'email',
+  address: 'address',
+  createdAt: 'createdAt'
+} as const
+
+export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum]
+
+
 export const PurchaseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  invoiceNumber: 'invoiceNumber',
+  supplierId: 'supplierId',
   provider: 'provider',
+  invoiceNumber: 'invoiceNumber',
   date: 'date',
   createdAt: 'createdAt'
 } as const

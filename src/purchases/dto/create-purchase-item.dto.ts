@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export class CreatePurchaseItemDto {
   @IsNotEmpty()
@@ -13,5 +20,18 @@ export class CreatePurchaseItemDto {
   @IsNotEmpty()
   @IsNumber()
   @Min(0)
-  unitPrice: number;
+  purchasePrice: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  salePrice: number;
+
+  @IsOptional()
+  @IsDateString(
+    {},
+    { message: 'La fecha de vencimiento debe tener un formato válido' },
+  )
+  expiryDate?: string;
 }
+

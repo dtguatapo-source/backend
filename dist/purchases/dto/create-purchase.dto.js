@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePurchaseDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-const create_purchase_item_dto_1 = require("./create-purchase-item.dto");
+const create_purchase_item_dto_js_1 = require("./create-purchase-item.dto.js");
 class CreatePurchaseDto {
     supplierId;
     invoiceNumber;
@@ -33,7 +33,7 @@ __decorate([
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayMinSize)(1),
     (0, class_validator_1.ValidateNested)({ each: true }),
-    (0, class_transformer_1.Type)(() => create_purchase_item_dto_1.CreatePurchaseItemDto),
+    (0, class_transformer_1.Type)(() => create_purchase_item_dto_js_1.CreatePurchaseItemDto),
     __metadata("design:type", Array)
 ], CreatePurchaseDto.prototype, "items", void 0);
 //# sourceMappingURL=create-purchase.dto.js.map

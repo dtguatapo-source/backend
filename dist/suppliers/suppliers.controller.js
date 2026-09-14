@@ -14,9 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SuppliersController = void 0;
 const common_1 = require("@nestjs/common");
-const suppliers_service_1 = require("./suppliers.service");
-const create_supplier_dto_1 = require("./dto/create-supplier.dto");
-const update_supplier_dto_1 = require("./dto/update-supplier.dto");
+const suppliers_service_js_1 = require("./suppliers.service.js");
+const create_supplier_dto_js_1 = require("./dto/create-supplier.dto.js");
+const update_supplier_dto_js_1 = require("./dto/update-supplier.dto.js");
 let SuppliersController = class SuppliersController {
     suppliersService;
     constructor(suppliersService) {
@@ -28,28 +28,23 @@ let SuppliersController = class SuppliersController {
     findAll() {
         return this.suppliersService.findAll();
     }
-    searchByName(name) {
-        return this.suppliersService.searchByName(name);
-    }
-    findByNit(nit) {
-        return this.suppliersService.findByNit(nit);
-    }
     findOne(id) {
-        return this.suppliersService.findOne(+id);
+        return this.suppliersService.findOne(id);
     }
     update(id, updateSupplierDto) {
-        return this.suppliersService.update(+id, updateSupplierDto);
+        return this.suppliersService.update(id, updateSupplierDto);
     }
     remove(id) {
-        return this.suppliersService.remove(+id);
+        return this.suppliersService.remove(id);
     }
 };
 exports.SuppliersController = SuppliersController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_supplier_dto_1.CreateSupplierDto]),
+    __metadata("design:paramtypes", [create_supplier_dto_js_1.CreateSupplierDto]),
     __metadata("design:returntype", void 0)
 ], SuppliersController.prototype, "create", null);
 __decorate([
@@ -59,43 +54,30 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], SuppliersController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)('search'),
-    __param(0, (0, common_1.Query)('name')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], SuppliersController.prototype, "searchByName", null);
-__decorate([
-    (0, common_1.Get)('nit/:nit'),
-    __param(0, (0, common_1.Param)('nit')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], SuppliersController.prototype, "findByNit", null);
-__decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], SuppliersController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_supplier_dto_1.UpdateSupplierDto]),
+    __metadata("design:paramtypes", [Number, update_supplier_dto_js_1.UpdateSupplierDto]),
     __metadata("design:returntype", void 0)
 ], SuppliersController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.HttpCode)(common_1.HttpStatus.NO_CONTENT),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], SuppliersController.prototype, "remove", null);
 exports.SuppliersController = SuppliersController = __decorate([
     (0, common_1.Controller)('suppliers'),
-    __metadata("design:paramtypes", [suppliers_service_1.SuppliersService])
+    __metadata("design:paramtypes", [suppliers_service_js_1.SuppliersService])
 ], SuppliersController);
 //# sourceMappingURL=suppliers.controller.js.map

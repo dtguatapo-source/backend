@@ -14,7 +14,9 @@ const class_validator_1 = require("class-validator");
 class CreatePurchaseItemDto {
     medicineId;
     quantity;
-    unitPrice;
+    purchasePrice;
+    salePrice;
+    expiryDate;
 }
 exports.CreatePurchaseItemDto = CreatePurchaseItemDto;
 __decorate([
@@ -33,5 +35,16 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
-], CreatePurchaseItemDto.prototype, "unitPrice", void 0);
+], CreatePurchaseItemDto.prototype, "purchasePrice", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreatePurchaseItemDto.prototype, "salePrice", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)({}, { message: 'La fecha de vencimiento debe tener un formato válido' }),
+    __metadata("design:type", String)
+], CreatePurchaseItemDto.prototype, "expiryDate", void 0);
 //# sourceMappingURL=create-purchase-item.dto.js.map

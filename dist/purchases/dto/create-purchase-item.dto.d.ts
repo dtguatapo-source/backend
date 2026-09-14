@@ -1,5 +1,7 @@
 export declare class CreatePurchaseItemDto {
     medicineId: string;
     quantity: number;
-    unitPrice: number;
+    purchasePrice: number;
+    salePrice: number;
+    expiryDate?: string;
 }

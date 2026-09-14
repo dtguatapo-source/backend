@@ -11,7 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PurchasesService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma/prisma.service");
+const prisma_service_js_1 = require("../prisma/prisma.service.js");
+const client_js_1 = require("../generated/prisma/client.js");
 let PurchasesService = class PurchasesService {
     prisma;
     constructor(prisma) {
@@ -19,47 +20,61 @@ let PurchasesService = class PurchasesService {
     }
     async create(createPurchaseDto) {
         const { supplierId, invoiceNumber, items } = createPurchaseDto;
-        if (supplierId) {
-            const supplier = await this.prisma.supplier.findUnique({
-                where: { id: supplierId },
-            });
-            if (!supplier) {
-                throw new common_1.NotFoundException(`El proveedor con ID #${supplierId} no existe`);
-            }
-        }
-        return await this.prisma.$transaction(async (tx) => {
-            const purchase = await tx.purchase.create({
-                data: {
-                    supplierId: supplierId || null,
-                    invoiceNumber: invoiceNumber || `FAC-${Date.now()}`,
-                    date: new Date(),
-                    items: {
-                        create: items.map((item) => ({
-                            medicineId: item.medicineId,
-                            quantity: item.quantity,
-                            purchasePrice: item.unitPrice,
-                            salePrice: item.unitPrice,
-                            total: item.quantity * item.unitPrice,
-                        })),
-                    },
-                },
-                include: {
-                    items: true,
-                    supplier: true,
-                },
-            });
-            for (const item of items) {
-                await tx.medicine.update({
-                    where: { id: item.medicineId },
+        try {
+            return await this.prisma.$transaction(async (tx) => {
+                const purchase = await tx.purchase.create({
                     data: {
-                        stock: {
-                            increment: item.quantity,
+                        supplierId,
+                        invoiceNumber: invoiceNumber || `FAC-${Date.now()}`,
+                        date: new Date(),
+                        items: {
+                            create: items.map((item) => ({
+                                medicineId: item.medicineId,
+                                quantity: item.quantity,
+                                purchasePrice: item.purchasePrice,
+                                salePrice: item.salePrice,
+                                expiryDate: item.expiryDate
+                                    ? new Date(item.expiryDate)
+                                    : null,
+                                total: item.quantity * item.purchasePrice,
+                            })),
                         },
                     },
+                    include: {
+                        items: true,
+                        supplier: true,
+                    },
                 });
+                for (const item of items) {
+                    await tx.medicine.update({
+                        where: { id: item.medicineId },
+                        data: {
+                            stock: {
+                                increment: item.quantity,
+                            },
+                            purchasePrice: item.purchasePrice,
+                            salePrice: item.salePrice,
+                            status: 'DISPONIBLE',
+                        },
+                    });
+                }
+                return purchase;
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2003') {
+                    throw new common_1.NotFoundException('El proveedor o uno de los medicamentos especificados no existe.');
+                }
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException('El proveedor o uno de los medicamentos especificados no existe.');
+                }
+                if (error.code === 'P2002') {
+                    throw new common_1.ConflictException('El número de factura ya está registrado en el sistema.');
+                }
             }
-            return purchase;
-        });
+            throw error;
+        }
     }
     async findAll() {
         return await this.prisma.purchase.findMany({
@@ -88,7 +103,7 @@ let PurchasesService = class PurchasesService {
             },
         });
         if (!purchase) {
-            throw new common_1.NotFoundException(`La compra con ID #${id} no fue encontrada`);
+            throw new common_1.NotFoundException(`La compra con ID #${id} no fue encontrada.`);
         }
         return purchase;
     }
@@ -96,6 +111,6 @@ let PurchasesService = class PurchasesService {
 exports.PurchasesService = PurchasesService;
 exports.PurchasesService = PurchasesService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_js_1.PrismaService])
 ], PurchasesService);
 //# sourceMappingURL=purchases.service.js.map

@@ -80,7 +80,9 @@ __decorate([
 ], CreateMedicineDto.prototype, "salePrice", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsEnum)(EstadoMedicamento, { message: 'El estado debe ser DISPONIBLE, AGOTADO o VENCIDO' }),
+    (0, class_validator_1.IsEnum)(EstadoMedicamento, {
+        message: 'El estado debe ser DISPONIBLE, AGOTADO o VENCIDO',
+    }),
     __metadata("design:type", String)
 ], CreateMedicineDto.prototype, "status", void 0);
 //# sourceMappingURL=create-medicine.dto.js.map

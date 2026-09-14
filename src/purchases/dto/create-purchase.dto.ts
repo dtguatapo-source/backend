@@ -1,11 +1,21 @@
+
 import { Type } from 'class-transformer';
-import { ArrayMinSize, IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { CreatePurchaseItemDto } from './create-purchase-item.dto';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+
+import { CreatePurchaseItemDto } from './create-purchase-item.dto.js';
 
 export class CreatePurchaseDto {
   @IsNotEmpty()
   @IsNumber()
-  supplierId: number;
+  supplierId!: number;
 
   @IsOptional()
   @IsString()
@@ -15,5 +25,6 @@ export class CreatePurchaseDto {
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => CreatePurchaseItemDto)
-  items: CreatePurchaseItemDto[];
+  items!: CreatePurchaseItemDto[];
 }
+

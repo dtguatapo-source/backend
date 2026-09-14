@@ -11,75 +11,83 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SuppliersService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma/prisma.service");
+const prisma_service_js_1 = require("../prisma/prisma.service.js");
+const client_js_1 = require("../generated/prisma/client.js");
 let SuppliersService = class SuppliersService {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
     async create(createSupplierDto) {
-        return await this.prisma.supplier.create({
-            data: createSupplierDto,
-        });
+        try {
+            return await this.prisma.supplier.create({
+                data: createSupplierDto,
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError &&
+                error.code === 'P2002') {
+                throw new common_1.ConflictException('Ya existe un proveedor registrado con esos datos (NIT o email duplicado).');
+            }
+            throw error;
+        }
     }
     async findAll() {
         return await this.prisma.supplier.findMany({
-            include: {
-                purchases: true,
-            },
+            include: { purchases: true },
         });
     }
     async findOne(id) {
         const supplier = await this.prisma.supplier.findUnique({
             where: { id },
-            include: {
-                purchases: true,
-            },
+            include: { purchases: true },
         });
         if (!supplier) {
-            throw new common_1.NotFoundException(`Proveedor con ID #${id} no encontrado`);
+            throw new common_1.NotFoundException(`Proveedor con ID #${id} no encontrado.`);
         }
         return supplier;
-    }
-    async findByNit(nit) {
-        const supplier = await this.prisma.supplier.findUnique({
-            where: { nit },
-            include: {
-                purchases: true,
-            },
-        });
-        if (!supplier) {
-            throw new common_1.NotFoundException(`Proveedor con NIT ${nit} no encontrado`);
-        }
-        return supplier;
-    }
-    async searchByName(name) {
-        return await this.prisma.supplier.findMany({
-            where: {
-                name: {
-                    contains: name,
-                    mode: 'insensitive',
-                },
-            },
-        });
     }
     async update(id, updateSupplierDto) {
-        await this.findOne(id);
-        return await this.prisma.supplier.update({
-            where: { id },
-            data: updateSupplierDto,
-        });
+        try {
+            return await this.prisma.supplier.update({
+                where: { id },
+                data: updateSupplierDto,
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException(`Proveedor con ID #${id} no encontrado.`);
+                }
+                if (error.code === 'P2002') {
+                    throw new common_1.ConflictException('El NIT o email ingresado entra en conflicto con otro proveedor.');
+                }
+            }
+            throw error;
+        }
     }
     async remove(id) {
-        await this.findOne(id);
-        return await this.prisma.supplier.delete({
-            where: { id },
-        });
+        try {
+            await this.prisma.supplier.delete({
+                where: { id },
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException(`Proveedor con ID #${id} no encontrado.`);
+                }
+                if (error.code === 'P2003') {
+                    throw new common_1.ConflictException('No se puede eliminar el proveedor porque tiene compras registradas asociadas.');
+                }
+            }
+            throw error;
+        }
     }
 };
 exports.SuppliersService = SuppliersService;
 exports.SuppliersService = SuppliersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_js_1.PrismaService])
 ], SuppliersService);
 //# sourceMappingURL=suppliers.service.js.map

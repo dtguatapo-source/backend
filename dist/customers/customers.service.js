@@ -11,19 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomersService = void 0;
 const common_1 = require("@nestjs/common");
-const prisma_service_1 = require("../prisma/prisma.service");
+const prisma_service_js_1 = require("../prisma/prisma.service.js");
+const client_js_1 = require("../generated/prisma/client.js");
 let CustomersService = class CustomersService {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
     async create(createCustomerDto) {
-        return await this.prisma.customer.create({
-            data: {
-                name: createCustomerDto.name,
-                idNumber: createCustomerDto.idNumber,
-            },
-        });
+        try {
+            return await this.prisma.customer.create({
+                data: {
+                    name: createCustomerDto.name,
+                    idNumber: createCustomerDto.idNumber,
+                },
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError &&
+                error.code === 'P2002') {
+                throw new common_1.ConflictException('Ya existe un cliente registrado con ese número de documento.');
+            }
+            throw error;
+        }
     }
     async findAll() {
         return await this.prisma.customer.findMany();
@@ -33,27 +43,51 @@ let CustomersService = class CustomersService {
             where: { id },
         });
         if (!customer) {
-            throw new common_1.NotFoundException(`Cliente con ID ${id} no encontrado`);
+            throw new common_1.NotFoundException(`Cliente con ID #${id} no encontrado.`);
         }
         return customer;
     }
     async update(id, updateCustomerDto) {
-        await this.findOne(id);
-        return await this.prisma.customer.update({
-            where: { id },
-            data: updateCustomerDto,
-        });
+        try {
+            return await this.prisma.customer.update({
+                where: { id },
+                data: updateCustomerDto,
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException(`Cliente con ID #${id} no encontrado.`);
+                }
+                if (error.code === 'P2002') {
+                    throw new common_1.ConflictException('El número de documento ingresado entra en conflicto con otro cliente.');
+                }
+            }
+            throw error;
+        }
     }
     async remove(id) {
-        await this.findOne(id);
-        return await this.prisma.customer.delete({
-            where: { id },
-        });
+        try {
+            await this.prisma.customer.delete({
+                where: { id },
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException(`Cliente con ID #${id} no encontrado.`);
+                }
+                if (error.code === 'P2003') {
+                    throw new common_1.ConflictException('No se puede eliminar el cliente porque tiene ventas registradas a su nombre.');
+                }
+            }
+            throw error;
+        }
     }
 };
 exports.CustomersService = CustomersService;
 exports.CustomersService = CustomersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_js_1.PrismaService])
 ], CustomersService);
 //# sourceMappingURL=customers.service.js.map

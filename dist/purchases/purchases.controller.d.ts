@@ -1,5 +1,5 @@
-import { CreatePurchaseDto } from './dto/create-purchase.dto';
-import { PurchasesService } from './purchases.service';
+import { CreatePurchaseDto } from './dto/create-purchase.dto.js';
+import { PurchasesService } from './purchases.service.js';
 export declare class PurchasesController {
     private readonly purchasesService;
     constructor(purchasesService: PurchasesService);
@@ -59,7 +59,7 @@ export declare class PurchasesController {
                 stock: number;
                 purchasePrice: import("@prisma/client-runtime-utils").Decimal;
                 salePrice: import("@prisma/client-runtime-utils").Decimal;
-                status: import("../generated/prisma/enums").EstadoMedicamento;
+                status: import("../generated/prisma/enums.js").EstadoMedicamento;
             };
         } & {
             id: number;
@@ -80,7 +80,7 @@ export declare class PurchasesController {
         date: Date;
         userId: number | null;
     })[]>;
-    findOne(id: string): Promise<{
+    findOne(id: number): Promise<{
         user: {
             id: number;
             createdAt: Date | null;
@@ -107,7 +107,7 @@ export declare class PurchasesController {
                 stock: number;
                 purchasePrice: import("@prisma/client-runtime-utils").Decimal;
                 salePrice: import("@prisma/client-runtime-utils").Decimal;
-                status: import("../generated/prisma/enums").EstadoMedicamento;
+                status: import("../generated/prisma/enums.js").EstadoMedicamento;
             };
         } & {
             id: number;

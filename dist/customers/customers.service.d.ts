@@ -1,6 +1,6 @@
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
-import { PrismaService } from '../prisma/prisma.service';
+import { CreateCustomerDto } from './dto/create-customer.dto.js';
+import { UpdateCustomerDto } from './dto/update-customer.dto.js';
+import { PrismaService } from '../prisma/prisma.service.js';
 export declare class CustomersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -24,9 +24,5 @@ export declare class CustomersService {
         name: string;
         idNumber: string;
     }>;
-    remove(id: number): Promise<{
-        id: number;
-        name: string;
-        idNumber: string;
-    }>;
+    remove(id: number): Promise<void>;
 }

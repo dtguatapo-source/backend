@@ -14,8 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PurchasesController = void 0;
 const common_1 = require("@nestjs/common");
-const create_purchase_dto_1 = require("./dto/create-purchase.dto");
-const purchases_service_1 = require("./purchases.service");
+const create_purchase_dto_js_1 = require("./dto/create-purchase.dto.js");
+const purchases_service_js_1 = require("./purchases.service.js");
 let PurchasesController = class PurchasesController {
     purchasesService;
     constructor(purchasesService) {
@@ -28,15 +28,16 @@ let PurchasesController = class PurchasesController {
         return this.purchasesService.findAll();
     }
     findOne(id) {
-        return this.purchasesService.findOne(+id);
+        return this.purchasesService.findOne(id);
     }
 };
 exports.PurchasesController = PurchasesController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_purchase_dto_1.CreatePurchaseDto]),
+    __metadata("design:paramtypes", [create_purchase_dto_js_1.CreatePurchaseDto]),
     __metadata("design:returntype", void 0)
 ], PurchasesController.prototype, "create", null);
 __decorate([
@@ -47,13 +48,13 @@ __decorate([
 ], PurchasesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], PurchasesController.prototype, "findOne", null);
 exports.PurchasesController = PurchasesController = __decorate([
     (0, common_1.Controller)('purchases'),
-    __metadata("design:paramtypes", [purchases_service_1.PurchasesService])
+    __metadata("design:paramtypes", [purchases_service_js_1.PurchasesService])
 ], PurchasesController);
 //# sourceMappingURL=purchases.controller.js.map

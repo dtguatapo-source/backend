@@ -12,15 +12,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MedicinesService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_js_1 = require("../prisma/prisma.service.js");
+const client_js_1 = require("../generated/prisma/client.js");
 let MedicinesService = class MedicinesService {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
     async create(createMedicineDto) {
-        return await this.prisma.medicine.create({
-            data: createMedicineDto,
-        });
+        try {
+            return await this.prisma.medicine.create({
+                data: createMedicineDto,
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError &&
+                error.code === 'P2002') {
+                throw new common_1.ConflictException('El medicamento ya existe');
+            }
+            throw error;
+        }
     }
     async findAll() {
         return await this.prisma.medicine.findMany();
@@ -35,17 +45,41 @@ let MedicinesService = class MedicinesService {
         return medicine;
     }
     async update(id, updateMedicineDto) {
-        await this.findOne(id);
-        return await this.prisma.medicine.update({
-            where: { id },
-            data: updateMedicineDto,
-        });
+        try {
+            return await this.prisma.medicine.update({
+                where: { id },
+                data: updateMedicineDto,
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2002') {
+                    throw new common_1.ConflictException('Los datos a actualizar entran en conflicto con un registro existente');
+                }
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException(`El medicamento con ID "${id}" no existe`);
+                }
+            }
+            throw error;
+        }
     }
     async remove(id) {
-        await this.findOne(id);
-        return await this.prisma.medicine.delete({
-            where: { id },
-        });
+        try {
+            await this.prisma.medicine.delete({
+                where: { id },
+            });
+        }
+        catch (error) {
+            if (error instanceof client_js_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2003') {
+                    throw new common_1.ConflictException('No se puede eliminar el medicamento porque está enlazado a otros registros');
+                }
+                if (error.code === 'P2025') {
+                    throw new common_1.NotFoundException(`El medicamento con ID "${id}" no existe`);
+                }
+            }
+            throw error;
+        }
     }
     async findLowStock() {
         return await this.prisma.medicine.findMany({

@@ -1,4 +1,12 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export enum EstadoMedicamento {
   DISPONIBLE = 'DISPONIBLE',
@@ -47,6 +55,9 @@ export class CreateMedicineDto {
   salePrice!: number;
 
   @IsNotEmpty()
-  @IsEnum(EstadoMedicamento, { message: 'El estado debe ser DISPONIBLE, AGOTADO o VENCIDO' })
+  @IsEnum(EstadoMedicamento, {
+    message: 'El estado debe ser DISPONIBLE, AGOTADO o VENCIDO',
+  })
   status!: EstadoMedicamento;
 }
+

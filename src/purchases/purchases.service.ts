@@ -10,7 +10,7 @@ import { Prisma } from '../generated/prisma/client.js';
 
 @Injectable()
 export class PurchasesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   // Crear una compra y aumentar el stock
   async create(createPurchaseDto: CreatePurchaseDto) {
@@ -37,8 +37,12 @@ export class PurchasesService {
             },
           },
           include: {
-            items: true,
             supplier: true,
+            items: {
+              include: {
+                medicine: true,
+              },
+            },
           },
         });
 

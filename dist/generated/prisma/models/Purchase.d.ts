@@ -22,7 +22,6 @@ export type PurchaseMinAggregateOutputType = {
     id: number | null;
     userId: number | null;
     supplierId: number | null;
-    provider: string | null;
     invoiceNumber: string | null;
     date: Date | null;
     createdAt: Date | null;
@@ -31,7 +30,6 @@ export type PurchaseMaxAggregateOutputType = {
     id: number | null;
     userId: number | null;
     supplierId: number | null;
-    provider: string | null;
     invoiceNumber: string | null;
     date: Date | null;
     createdAt: Date | null;
@@ -40,7 +38,6 @@ export type PurchaseCountAggregateOutputType = {
     id: number;
     userId: number;
     supplierId: number;
-    provider: number;
     invoiceNumber: number;
     date: number;
     createdAt: number;
@@ -60,7 +57,6 @@ export type PurchaseMinAggregateInputType = {
     id?: true;
     userId?: true;
     supplierId?: true;
-    provider?: true;
     invoiceNumber?: true;
     date?: true;
     createdAt?: true;
@@ -69,7 +65,6 @@ export type PurchaseMaxAggregateInputType = {
     id?: true;
     userId?: true;
     supplierId?: true;
-    provider?: true;
     invoiceNumber?: true;
     date?: true;
     createdAt?: true;
@@ -78,7 +73,6 @@ export type PurchaseCountAggregateInputType = {
     id?: true;
     userId?: true;
     supplierId?: true;
-    provider?: true;
     invoiceNumber?: true;
     date?: true;
     createdAt?: true;
@@ -115,8 +109,7 @@ export type PurchaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type PurchaseGroupByOutputType = {
     id: number;
     userId: number | null;
-    supplierId: number | null;
-    provider: string | null;
+    supplierId: number;
     invoiceNumber: string;
     date: Date;
     createdAt: Date | null;
@@ -135,20 +128,18 @@ export type PurchaseWhereInput = {
     NOT?: Prisma.PurchaseWhereInput | Prisma.PurchaseWhereInput[];
     id?: Prisma.IntFilter<"Purchase"> | number;
     userId?: Prisma.IntNullableFilter<"Purchase"> | number | null;
-    supplierId?: Prisma.IntNullableFilter<"Purchase"> | number | null;
-    provider?: Prisma.StringNullableFilter<"Purchase"> | string | null;
+    supplierId?: Prisma.IntFilter<"Purchase"> | number;
     invoiceNumber?: Prisma.StringFilter<"Purchase"> | string;
     date?: Prisma.DateTimeFilter<"Purchase"> | Date | string;
     createdAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null;
     user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null;
-    supplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null;
+    supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>;
     items?: Prisma.PurchaseItemListRelationFilter;
 };
 export type PurchaseOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrderInput | Prisma.SortOrder;
-    supplierId?: Prisma.SortOrderInput | Prisma.SortOrder;
-    provider?: Prisma.SortOrderInput | Prisma.SortOrder;
+    supplierId?: Prisma.SortOrder;
     invoiceNumber?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrderInput | Prisma.SortOrder;
@@ -162,20 +153,18 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
     OR?: Prisma.PurchaseWhereInput[];
     NOT?: Prisma.PurchaseWhereInput | Prisma.PurchaseWhereInput[];
     userId?: Prisma.IntNullableFilter<"Purchase"> | number | null;
-    supplierId?: Prisma.IntNullableFilter<"Purchase"> | number | null;
-    provider?: Prisma.StringNullableFilter<"Purchase"> | string | null;
+    supplierId?: Prisma.IntFilter<"Purchase"> | number;
     invoiceNumber?: Prisma.StringFilter<"Purchase"> | string;
     date?: Prisma.DateTimeFilter<"Purchase"> | Date | string;
     createdAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null;
     user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null;
-    supplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null;
+    supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>;
     items?: Prisma.PurchaseItemListRelationFilter;
 }, "id">;
 export type PurchaseOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrderInput | Prisma.SortOrder;
-    supplierId?: Prisma.SortOrderInput | Prisma.SortOrder;
-    provider?: Prisma.SortOrderInput | Prisma.SortOrder;
+    supplierId?: Prisma.SortOrder;
     invoiceNumber?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrderInput | Prisma.SortOrder;
@@ -191,45 +180,40 @@ export type PurchaseScalarWhereWithAggregatesInput = {
     NOT?: Prisma.PurchaseScalarWhereWithAggregatesInput | Prisma.PurchaseScalarWhereWithAggregatesInput[];
     id?: Prisma.IntWithAggregatesFilter<"Purchase"> | number;
     userId?: Prisma.IntNullableWithAggregatesFilter<"Purchase"> | number | null;
-    supplierId?: Prisma.IntNullableWithAggregatesFilter<"Purchase"> | number | null;
-    provider?: Prisma.StringNullableWithAggregatesFilter<"Purchase"> | string | null;
+    supplierId?: Prisma.IntWithAggregatesFilter<"Purchase"> | number;
     invoiceNumber?: Prisma.StringWithAggregatesFilter<"Purchase"> | string;
     date?: Prisma.DateTimeWithAggregatesFilter<"Purchase"> | Date | string;
     createdAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null;
 };
 export type PurchaseCreateInput = {
-    provider?: string | null;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
     user?: Prisma.UserCreateNestedOneWithoutPurchasesInput;
-    supplier?: Prisma.SupplierCreateNestedOneWithoutPurchasesInput;
+    supplier: Prisma.SupplierCreateNestedOneWithoutPurchasesInput;
     items?: Prisma.PurchaseItemCreateNestedManyWithoutPurchaseInput;
 };
 export type PurchaseUncheckedCreateInput = {
     id?: number;
     userId?: number | null;
-    supplierId?: number | null;
-    provider?: string | null;
+    supplierId: number;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
     items?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutPurchaseInput;
 };
 export type PurchaseUpdateInput = {
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     user?: Prisma.UserUpdateOneWithoutPurchasesNestedInput;
-    supplier?: Prisma.SupplierUpdateOneWithoutPurchasesNestedInput;
+    supplier?: Prisma.SupplierUpdateOneRequiredWithoutPurchasesNestedInput;
     items?: Prisma.PurchaseItemUpdateManyWithoutPurchaseNestedInput;
 };
 export type PurchaseUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    supplierId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    supplierId?: Prisma.IntFieldUpdateOperationsInput | number;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -238,14 +222,12 @@ export type PurchaseUncheckedUpdateInput = {
 export type PurchaseCreateManyInput = {
     id?: number;
     userId?: number | null;
-    supplierId?: number | null;
-    provider?: string | null;
+    supplierId: number;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
 };
 export type PurchaseUpdateManyMutationInput = {
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -253,8 +235,7 @@ export type PurchaseUpdateManyMutationInput = {
 export type PurchaseUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    supplierId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    supplierId?: Prisma.IntFieldUpdateOperationsInput | number;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -271,7 +252,6 @@ export type PurchaseCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     supplierId?: Prisma.SortOrder;
-    provider?: Prisma.SortOrder;
     invoiceNumber?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -285,7 +265,6 @@ export type PurchaseMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     supplierId?: Prisma.SortOrder;
-    provider?: Prisma.SortOrder;
     invoiceNumber?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -294,7 +273,6 @@ export type PurchaseMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
     supplierId?: Prisma.SortOrder;
-    provider?: Prisma.SortOrder;
     invoiceNumber?: Prisma.SortOrder;
     date?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -404,17 +382,15 @@ export type PurchaseUpdateOneRequiredWithoutItemsNestedInput = {
     update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseUpdateToOneWithWhereWithoutItemsInput, Prisma.PurchaseUpdateWithoutItemsInput>, Prisma.PurchaseUncheckedUpdateWithoutItemsInput>;
 };
 export type PurchaseCreateWithoutUserInput = {
-    provider?: string | null;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
-    supplier?: Prisma.SupplierCreateNestedOneWithoutPurchasesInput;
+    supplier: Prisma.SupplierCreateNestedOneWithoutPurchasesInput;
     items?: Prisma.PurchaseItemCreateNestedManyWithoutPurchaseInput;
 };
 export type PurchaseUncheckedCreateWithoutUserInput = {
     id?: number;
-    supplierId?: number | null;
-    provider?: string | null;
+    supplierId: number;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
@@ -447,14 +423,12 @@ export type PurchaseScalarWhereInput = {
     NOT?: Prisma.PurchaseScalarWhereInput | Prisma.PurchaseScalarWhereInput[];
     id?: Prisma.IntFilter<"Purchase"> | number;
     userId?: Prisma.IntNullableFilter<"Purchase"> | number | null;
-    supplierId?: Prisma.IntNullableFilter<"Purchase"> | number | null;
-    provider?: Prisma.StringNullableFilter<"Purchase"> | string | null;
+    supplierId?: Prisma.IntFilter<"Purchase"> | number;
     invoiceNumber?: Prisma.StringFilter<"Purchase"> | string;
     date?: Prisma.DateTimeFilter<"Purchase"> | Date | string;
     createdAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null;
 };
 export type PurchaseCreateWithoutSupplierInput = {
-    provider?: string | null;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
@@ -464,7 +438,6 @@ export type PurchaseCreateWithoutSupplierInput = {
 export type PurchaseUncheckedCreateWithoutSupplierInput = {
     id?: number;
     userId?: number | null;
-    provider?: string | null;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
@@ -492,18 +465,16 @@ export type PurchaseUpdateManyWithWhereWithoutSupplierInput = {
     data: Prisma.XOR<Prisma.PurchaseUpdateManyMutationInput, Prisma.PurchaseUncheckedUpdateManyWithoutSupplierInput>;
 };
 export type PurchaseCreateWithoutItemsInput = {
-    provider?: string | null;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
     user?: Prisma.UserCreateNestedOneWithoutPurchasesInput;
-    supplier?: Prisma.SupplierCreateNestedOneWithoutPurchasesInput;
+    supplier: Prisma.SupplierCreateNestedOneWithoutPurchasesInput;
 };
 export type PurchaseUncheckedCreateWithoutItemsInput = {
     id?: number;
     userId?: number | null;
-    supplierId?: number | null;
-    provider?: string | null;
+    supplierId: number;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
@@ -522,42 +493,37 @@ export type PurchaseUpdateToOneWithWhereWithoutItemsInput = {
     data: Prisma.XOR<Prisma.PurchaseUpdateWithoutItemsInput, Prisma.PurchaseUncheckedUpdateWithoutItemsInput>;
 };
 export type PurchaseUpdateWithoutItemsInput = {
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     user?: Prisma.UserUpdateOneWithoutPurchasesNestedInput;
-    supplier?: Prisma.SupplierUpdateOneWithoutPurchasesNestedInput;
+    supplier?: Prisma.SupplierUpdateOneRequiredWithoutPurchasesNestedInput;
 };
 export type PurchaseUncheckedUpdateWithoutItemsInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    supplierId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    supplierId?: Prisma.IntFieldUpdateOperationsInput | number;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type PurchaseCreateManyUserInput = {
     id?: number;
-    supplierId?: number | null;
-    provider?: string | null;
+    supplierId: number;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
 };
 export type PurchaseUpdateWithoutUserInput = {
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
-    supplier?: Prisma.SupplierUpdateOneWithoutPurchasesNestedInput;
+    supplier?: Prisma.SupplierUpdateOneRequiredWithoutPurchasesNestedInput;
     items?: Prisma.PurchaseItemUpdateManyWithoutPurchaseNestedInput;
 };
 export type PurchaseUncheckedUpdateWithoutUserInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    supplierId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    supplierId?: Prisma.IntFieldUpdateOperationsInput | number;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -565,8 +531,7 @@ export type PurchaseUncheckedUpdateWithoutUserInput = {
 };
 export type PurchaseUncheckedUpdateManyWithoutUserInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
-    supplierId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    supplierId?: Prisma.IntFieldUpdateOperationsInput | number;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -574,13 +539,11 @@ export type PurchaseUncheckedUpdateManyWithoutUserInput = {
 export type PurchaseCreateManySupplierInput = {
     id?: number;
     userId?: number | null;
-    provider?: string | null;
     invoiceNumber: string;
     date: Date | string;
     createdAt?: Date | string | null;
 };
 export type PurchaseUpdateWithoutSupplierInput = {
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -590,7 +553,6 @@ export type PurchaseUpdateWithoutSupplierInput = {
 export type PurchaseUncheckedUpdateWithoutSupplierInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -599,7 +561,6 @@ export type PurchaseUncheckedUpdateWithoutSupplierInput = {
 export type PurchaseUncheckedUpdateManyWithoutSupplierInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
-    provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string;
     date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
@@ -620,12 +581,11 @@ export type PurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id?: boolean;
     userId?: boolean;
     supplierId?: boolean;
-    provider?: boolean;
     invoiceNumber?: boolean;
     date?: boolean;
     createdAt?: boolean;
     user?: boolean | Prisma.Purchase$userArgs<ExtArgs>;
-    supplier?: boolean | Prisma.Purchase$supplierArgs<ExtArgs>;
+    supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>;
     items?: boolean | Prisma.Purchase$itemsArgs<ExtArgs>;
     _count?: boolean | Prisma.PurchaseCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["purchase"]>;
@@ -633,60 +593,56 @@ export type PurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
     id?: boolean;
     userId?: boolean;
     supplierId?: boolean;
-    provider?: boolean;
     invoiceNumber?: boolean;
     date?: boolean;
     createdAt?: boolean;
     user?: boolean | Prisma.Purchase$userArgs<ExtArgs>;
-    supplier?: boolean | Prisma.Purchase$supplierArgs<ExtArgs>;
+    supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["purchase"]>;
 export type PurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     userId?: boolean;
     supplierId?: boolean;
-    provider?: boolean;
     invoiceNumber?: boolean;
     date?: boolean;
     createdAt?: boolean;
     user?: boolean | Prisma.Purchase$userArgs<ExtArgs>;
-    supplier?: boolean | Prisma.Purchase$supplierArgs<ExtArgs>;
+    supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["purchase"]>;
 export type PurchaseSelectScalar = {
     id?: boolean;
     userId?: boolean;
     supplierId?: boolean;
-    provider?: boolean;
     invoiceNumber?: boolean;
     date?: boolean;
     createdAt?: boolean;
 };
-export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "supplierId" | "provider" | "invoiceNumber" | "date" | "createdAt", ExtArgs["result"]["purchase"]>;
+export type PurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "supplierId" | "invoiceNumber" | "date" | "createdAt", ExtArgs["result"]["purchase"]>;
 export type PurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     user?: boolean | Prisma.Purchase$userArgs<ExtArgs>;
-    supplier?: boolean | Prisma.Purchase$supplierArgs<ExtArgs>;
+    supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>;
     items?: boolean | Prisma.Purchase$itemsArgs<ExtArgs>;
     _count?: boolean | Prisma.PurchaseCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type PurchaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     user?: boolean | Prisma.Purchase$userArgs<ExtArgs>;
-    supplier?: boolean | Prisma.Purchase$supplierArgs<ExtArgs>;
+    supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>;
 };
 export type PurchaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     user?: boolean | Prisma.Purchase$userArgs<ExtArgs>;
-    supplier?: boolean | Prisma.Purchase$supplierArgs<ExtArgs>;
+    supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>;
 };
 export type $PurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Purchase";
     objects: {
         user: Prisma.$UserPayload<ExtArgs> | null;
-        supplier: Prisma.$SupplierPayload<ExtArgs> | null;
+        supplier: Prisma.$SupplierPayload<ExtArgs>;
         items: Prisma.$PurchaseItemPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: number;
         userId: number | null;
-        supplierId: number | null;
-        provider: string | null;
+        supplierId: number;
         invoiceNumber: string;
         date: Date;
         createdAt: Date | null;
@@ -743,7 +699,7 @@ export interface PurchaseDelegate<ExtArgs extends runtime.Types.Extensions.Inter
 export interface Prisma__PurchaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     user<T extends Prisma.Purchase$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
-    supplier<T extends Prisma.Purchase$supplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$supplierArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    supplier<T extends Prisma.SupplierDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplierDefaultArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     items<T extends Prisma.Purchase$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Purchase$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
     catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
@@ -753,7 +709,6 @@ export interface PurchaseFieldRefs {
     readonly id: Prisma.FieldRef<"Purchase", 'Int'>;
     readonly userId: Prisma.FieldRef<"Purchase", 'Int'>;
     readonly supplierId: Prisma.FieldRef<"Purchase", 'Int'>;
-    readonly provider: Prisma.FieldRef<"Purchase", 'String'>;
     readonly invoiceNumber: Prisma.FieldRef<"Purchase", 'String'>;
     readonly date: Prisma.FieldRef<"Purchase", 'DateTime'>;
     readonly createdAt: Prisma.FieldRef<"Purchase", 'DateTime'>;
@@ -863,12 +818,6 @@ export type Purchase$userArgs<ExtArgs extends runtime.Types.Extensions.InternalA
     omit?: Prisma.UserOmit<ExtArgs> | null;
     include?: Prisma.UserInclude<ExtArgs> | null;
     where?: Prisma.UserWhereInput;
-};
-export type Purchase$supplierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    select?: Prisma.SupplierSelect<ExtArgs> | null;
-    omit?: Prisma.SupplierOmit<ExtArgs> | null;
-    include?: Prisma.SupplierInclude<ExtArgs> | null;
-    where?: Prisma.SupplierWhereInput;
 };
 export type Purchase$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.PurchaseItemSelect<ExtArgs> | null;

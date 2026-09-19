@@ -41,8 +41,12 @@ let PurchasesService = class PurchasesService {
                         },
                     },
                     include: {
-                        items: true,
                         supplier: true,
+                        items: {
+                            include: {
+                                medicine: true,
+                            },
+                        },
                     },
                 });
                 for (const item of items) {

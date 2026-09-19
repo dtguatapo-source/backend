@@ -16,3 +16,11 @@ export const EstadoMedicamento = {
 } as const
 
 export type EstadoMedicamento = (typeof EstadoMedicamento)[keyof typeof EstadoMedicamento]
+
+
+export const UserRole = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]

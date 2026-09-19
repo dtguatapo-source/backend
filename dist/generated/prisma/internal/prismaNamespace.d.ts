@@ -810,7 +810,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export declare const UserScalarFieldEnum: {
     readonly id: "id";
     readonly username: "username";
-    readonly password: "password";
+    readonly passwordHash: "passwordHash";
+    readonly role: "role";
     readonly createdAt: "createdAt";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
@@ -847,7 +848,6 @@ export declare const PurchaseScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
     readonly supplierId: "supplierId";
-    readonly provider: "provider";
     readonly invoiceNumber: "invoiceNumber";
     readonly date: "date";
     readonly createdAt: "createdAt";
@@ -903,6 +903,8 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>;
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>;
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>;
+export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>;
+export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>;
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>;
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>;
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>;

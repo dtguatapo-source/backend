@@ -31,7 +31,8 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export declare const UserScalarFieldEnum: {
     readonly id: "id";
     readonly username: "username";
-    readonly password: "password";
+    readonly passwordHash: "passwordHash";
+    readonly role: "role";
     readonly createdAt: "createdAt";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
@@ -68,7 +69,6 @@ export declare const PurchaseScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
     readonly supplierId: "supplierId";
-    readonly provider: "provider";
     readonly invoiceNumber: "invoiceNumber";
     readonly date: "date";
     readonly createdAt: "createdAt";

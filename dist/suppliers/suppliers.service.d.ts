@@ -17,9 +17,8 @@ export declare class SuppliersService {
         purchases: {
             id: number;
             createdAt: Date | null;
-            supplierId: number | null;
+            supplierId: number;
             invoiceNumber: string;
-            provider: string | null;
             date: Date;
             userId: number | null;
         }[];
@@ -36,9 +35,8 @@ export declare class SuppliersService {
         purchases: {
             id: number;
             createdAt: Date | null;
-            supplierId: number | null;
+            supplierId: number;
             invoiceNumber: string;
-            provider: string | null;
             date: Date;
             userId: number | null;
         }[];

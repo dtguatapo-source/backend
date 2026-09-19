@@ -397,9 +397,9 @@ export type SupplierSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
-export type SupplierNullableScalarRelationFilter = {
-  is?: Prisma.SupplierWhereInput | null
-  isNot?: Prisma.SupplierWhereInput | null
+export type SupplierScalarRelationFilter = {
+  is?: Prisma.SupplierWhereInput
+  isNot?: Prisma.SupplierWhereInput
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -412,12 +412,10 @@ export type SupplierCreateNestedOneWithoutPurchasesInput = {
   connect?: Prisma.SupplierWhereUniqueInput
 }
 
-export type SupplierUpdateOneWithoutPurchasesNestedInput = {
+export type SupplierUpdateOneRequiredWithoutPurchasesNestedInput = {
   create?: Prisma.XOR<Prisma.SupplierCreateWithoutPurchasesInput, Prisma.SupplierUncheckedCreateWithoutPurchasesInput>
   connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPurchasesInput
   upsert?: Prisma.SupplierUpsertWithoutPurchasesInput
-  disconnect?: Prisma.SupplierWhereInput | boolean
-  delete?: Prisma.SupplierWhereInput | boolean
   connect?: Prisma.SupplierWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutPurchasesInput, Prisma.SupplierUpdateWithoutPurchasesInput>, Prisma.SupplierUncheckedUpdateWithoutPurchasesInput>
 }

@@ -2,32 +2,25 @@ import {
   IsArray,
   IsNumber,
   IsOptional,
-  IsString,
   ValidateNested,
   Min,
+  IsInt,
+  IsString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateSaleItemDto {
   @IsString()
-  medicineId: string;
+  medicineId!: string;
 
   @IsNumber()
   @Min(1, { message: 'La cantidad debe ser al menos 1' })
-  quantity: number;
+  quantity!: number;
 }
 
 export class CreateSaleDto {
   @IsOptional()
-  @IsString()
-  customerName?: string;
-
-  @IsOptional()
-  @IsString()
-  customerIdNumber?: string;
-
-  @IsOptional()
-  @IsNumber()
+  @IsInt()
   customerId?: number;
 
   @IsOptional()
@@ -38,5 +31,5 @@ export class CreateSaleDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateSaleItemDto)
-  items: CreateSaleItemDto[];
+  items!: CreateSaleItemDto[];
 }

@@ -3,8 +3,6 @@ export declare class CreateSaleItemDto {
     quantity: number;
 }
 export declare class CreateSaleDto {
-    customerName?: string;
-    customerIdNumber?: string;
     customerId?: number;
     discount?: number;
     items: CreateSaleItemDto[];

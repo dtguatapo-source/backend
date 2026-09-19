@@ -110,13 +110,13 @@ export type CustomerOrderByWithRelationInput = {
 };
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
     id?: number;
+    idNumber?: string;
     AND?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[];
     OR?: Prisma.CustomerWhereInput[];
     NOT?: Prisma.CustomerWhereInput | Prisma.CustomerWhereInput[];
     name?: Prisma.StringFilter<"Customer"> | string;
-    idNumber?: Prisma.StringFilter<"Customer"> | string;
     sales?: Prisma.SaleListRelationFilter;
-}, "id">;
+}, "id" | "idNumber">;
 export type CustomerOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     name?: Prisma.SortOrder;

@@ -34,6 +34,7 @@ let SalesController = class SalesController {
 exports.SalesController = SalesController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_sale_dto_1.CreateSaleDto]),

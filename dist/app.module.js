@@ -10,14 +10,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = exports.ObserveInstrument = exports.ObserveModule = void 0;
 const common_1 = require("@nestjs/common");
 const observe_1 = require("@nestjs/observe");
-const app_controller_js_1 = require("./app.controller.js");
-const app_service_js_1 = require("./app.service.js");
-const prisma_module_js_1 = require("./prisma/prisma.module.js");
-const medicines_module_js_1 = require("./medicines/medicines.module.js");
+const app_controller_1 = require("./app.controller");
+const app_service_1 = require("./app.service");
+const prisma_module_1 = require("./prisma/prisma.module");
+const medicines_module_1 = require("./medicines/medicines.module");
 const customers_module_1 = require("./customers/customers.module");
 const suppliers_module_1 = require("./suppliers/suppliers.module");
 const purchases_module_1 = require("./purchases/purchases.module");
 const sales_module_1 = require("./sales/sales.module");
+const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
 _a = (0, observe_1.createObserveModule)(), exports.ObserveModule = _a.ObserveModule, exports.ObserveInstrument = _a.ObserveInstrument;
 let AppModule = class AppModule {
 };
@@ -25,15 +27,17 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            prisma_module_js_1.PrismaModule,
-            medicines_module_js_1.MedicinesModule,
+            prisma_module_1.PrismaModule,
+            medicines_module_1.MedicinesModule,
             customers_module_1.CustomersModule,
             suppliers_module_1.SuppliersModule,
             purchases_module_1.PurchasesModule,
             sales_module_1.SalesModule,
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
         ],
-        controllers: [app_controller_js_1.AppController],
-        providers: [app_service_js_1.AppService],
+        controllers: [app_controller_1.AppController],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

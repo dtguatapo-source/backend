@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+
 import { SalesService } from './sales.service';
 import { CreateSaleDto } from './dto/create-sale.dto';
 
@@ -7,6 +17,7 @@ export class SalesController {
   constructor(private readonly salesService: SalesService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createSaleDto: CreateSaleDto) {
     return this.salesService.create(createSaleDto);
   }

@@ -27,8 +27,6 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateSaleItemDto.prototype, "quantity", void 0);
 class CreateSaleDto {
-    customerName;
-    customerIdNumber;
     customerId;
     discount;
     items;
@@ -36,17 +34,7 @@ class CreateSaleDto {
 exports.CreateSaleDto = CreateSaleDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateSaleDto.prototype, "customerName", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateSaleDto.prototype, "customerIdNumber", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], CreateSaleDto.prototype, "customerId", void 0);
 __decorate([

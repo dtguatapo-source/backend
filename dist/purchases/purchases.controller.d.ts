@@ -12,8 +12,21 @@ export declare class PurchasesController {
             email: string | null;
             address: string | null;
             createdAt: Date;
-        } | null;
-        items: {
+        };
+        items: ({
+            medicine: {
+                id: string;
+                name: string;
+                laboratory: string;
+                category: string | null;
+                description: string;
+                keywords: string | null;
+                stock: number;
+                purchasePrice: import("@prisma/client-runtime-utils").Decimal;
+                salePrice: import("@prisma/client-runtime-utils").Decimal;
+                status: import("../generated/prisma/enums.js").EstadoMedicamento;
+            };
+        } & {
             id: number;
             purchasePrice: import("@prisma/client-runtime-utils").Decimal;
             salePrice: import("@prisma/client-runtime-utils").Decimal;
@@ -22,13 +35,12 @@ export declare class PurchasesController {
             expiryDate: Date | null;
             total: import("@prisma/client-runtime-utils").Decimal;
             purchaseId: number;
-        }[];
+        })[];
     } & {
         id: number;
         createdAt: Date | null;
-        supplierId: number | null;
+        supplierId: number;
         invoiceNumber: string;
-        provider: string | null;
         date: Date;
         userId: number | null;
     }>;
@@ -37,7 +49,8 @@ export declare class PurchasesController {
             id: number;
             createdAt: Date | null;
             username: string;
-            password: string;
+            passwordHash: string;
+            role: import("../generated/prisma/enums.js").UserRole;
         } | null;
         supplier: {
             id: number;
@@ -47,7 +60,7 @@ export declare class PurchasesController {
             email: string | null;
             address: string | null;
             createdAt: Date;
-        } | null;
+        };
         items: ({
             medicine: {
                 id: string;
@@ -74,9 +87,8 @@ export declare class PurchasesController {
     } & {
         id: number;
         createdAt: Date | null;
-        supplierId: number | null;
+        supplierId: number;
         invoiceNumber: string;
-        provider: string | null;
         date: Date;
         userId: number | null;
     })[]>;
@@ -85,7 +97,8 @@ export declare class PurchasesController {
             id: number;
             createdAt: Date | null;
             username: string;
-            password: string;
+            passwordHash: string;
+            role: import("../generated/prisma/enums.js").UserRole;
         } | null;
         supplier: {
             id: number;
@@ -95,7 +108,7 @@ export declare class PurchasesController {
             email: string | null;
             address: string | null;
             createdAt: Date;
-        } | null;
+        };
         items: ({
             medicine: {
                 id: string;
@@ -122,9 +135,8 @@ export declare class PurchasesController {
     } & {
         id: number;
         createdAt: Date | null;
-        supplierId: number | null;
+        supplierId: number;
         invoiceNumber: string;
-        provider: string | null;
         date: Date;
         userId: number | null;
     }>;

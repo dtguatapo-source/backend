@@ -1,0 +1,37 @@
+import { promisify } from 'node:util';
+import { randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
+
+const scrypt = promisify(scryptCallback);
+
+export async function hashPassword(password: string): Promise<string> {
+  const salt = randomBytes(16).toString('hex');
+  const key = (await scrypt(password, salt, 64)) as Buffer;
+  return `scrypt$16384$8$1$${salt}$${key.toString('hex')}`;
+}
+
+export async function verifyPassword(
+  password: string,
+  hash: string,
+): Promise<boolean> {
+  if (typeof hash !== 'string') {
+    return false;
+  }
+
+  const match = hash.match(
+    /^scrypt\$16384\$8\$1\$([a-f0-9]{32})\$([a-f0-9]{128})$/,
+  );
+
+  if (!match) {
+    return false;
+  }
+
+  const salt = match[1];
+  const storedKey = Buffer.from(match[2], 'hex');
+
+  try {
+    const derivedKey = (await scrypt(password, salt, 64)) as Buffer;
+    return timingSafeEqual(derivedKey, storedKey);
+  } catch {
+    return false;
+  }
+}

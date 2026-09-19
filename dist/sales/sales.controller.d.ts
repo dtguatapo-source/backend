@@ -35,10 +35,10 @@ export declare class SalesController {
         date: Date | null;
         userId: number | null;
         total: import("@prisma/client-runtime-utils").Decimal;
-        customerName: string | null;
-        customerIdNumber: string | null;
         customerId: number | null;
         discount: import("@prisma/client-runtime-utils").Decimal | null;
+        customerName: string | null;
+        customerIdNumber: string | null;
     }>;
     findAll(): Promise<({
         customer: {
@@ -72,10 +72,10 @@ export declare class SalesController {
         date: Date | null;
         userId: number | null;
         total: import("@prisma/client-runtime-utils").Decimal;
-        customerName: string | null;
-        customerIdNumber: string | null;
         customerId: number | null;
         discount: import("@prisma/client-runtime-utils").Decimal | null;
+        customerName: string | null;
+        customerIdNumber: string | null;
     })[]>;
     findOne(id: number): Promise<{
         customer: {
@@ -109,9 +109,9 @@ export declare class SalesController {
         date: Date | null;
         userId: number | null;
         total: import("@prisma/client-runtime-utils").Decimal;
-        customerName: string | null;
-        customerIdNumber: string | null;
         customerId: number | null;
         discount: import("@prisma/client-runtime-utils").Decimal | null;
+        customerName: string | null;
+        customerIdNumber: string | null;
     }>;
 }

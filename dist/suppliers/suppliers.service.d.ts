@@ -6,57 +6,57 @@ export declare class SuppliersService {
     constructor(prisma: PrismaService);
     create(createSupplierDto: CreateSupplierDto): Promise<{
         id: number;
+        createdAt: Date;
         name: string;
         nit: string;
         phone: string | null;
         email: string | null;
         address: string | null;
-        createdAt: Date;
     }>;
     findAll(): Promise<({
         purchases: {
             id: number;
             createdAt: Date | null;
+            userId: number | null;
             supplierId: number;
             invoiceNumber: string;
             date: Date;
-            userId: number | null;
         }[];
     } & {
         id: number;
+        createdAt: Date;
         name: string;
         nit: string;
         phone: string | null;
         email: string | null;
         address: string | null;
-        createdAt: Date;
     })[]>;
     findOne(id: number): Promise<{
         purchases: {
             id: number;
             createdAt: Date | null;
+            userId: number | null;
             supplierId: number;
             invoiceNumber: string;
             date: Date;
-            userId: number | null;
         }[];
     } & {
         id: number;
+        createdAt: Date;
         name: string;
         nit: string;
         phone: string | null;
         email: string | null;
         address: string | null;
-        createdAt: Date;
     }>;
     update(id: number, updateSupplierDto: UpdateSupplierDto): Promise<{
         id: number;
+        createdAt: Date;
         name: string;
         nit: string;
         phone: string | null;
         email: string | null;
         address: string | null;
-        createdAt: Date;
     }>;
     remove(id: number): Promise<void>;
 }

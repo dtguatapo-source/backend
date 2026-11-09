@@ -5,15 +5,15 @@ export declare class UsersService {
     constructor(prisma: PrismaService);
     create(createUserDto: CreateUserDto): Promise<{
         id: number;
-        createdAt: Date | null;
         username: string;
         role: import("../generated/prisma/enums").UserRole;
+        createdAt: Date | null;
     }>;
     findByUsername(username: string): Promise<{
         id: number;
-        createdAt: Date | null;
         username: string;
         passwordHash: string;
         role: import("../generated/prisma/enums").UserRole;
+        createdAt: Date | null;
     } | null>;
 }

@@ -6,12 +6,12 @@ export declare class PurchasesController {
     create(createPurchaseDto: CreatePurchaseDto): Promise<{
         supplier: {
             id: number;
+            createdAt: Date;
             name: string;
             nit: string;
             phone: string | null;
             email: string | null;
             address: string | null;
-            createdAt: Date;
         };
         items: ({
             medicine: {
@@ -30,36 +30,36 @@ export declare class PurchasesController {
             id: number;
             purchasePrice: import("@prisma/client-runtime-utils").Decimal;
             salePrice: import("@prisma/client-runtime-utils").Decimal;
+            purchaseId: number;
             medicineId: string;
             quantity: number;
             expiryDate: Date | null;
             total: import("@prisma/client-runtime-utils").Decimal;
-            purchaseId: number;
         })[];
     } & {
         id: number;
         createdAt: Date | null;
+        userId: number | null;
         supplierId: number;
         invoiceNumber: string;
         date: Date;
-        userId: number | null;
     }>;
     findAll(): Promise<({
         user: {
             id: number;
-            createdAt: Date | null;
             username: string;
             passwordHash: string;
             role: import("../generated/prisma/enums.js").UserRole;
+            createdAt: Date | null;
         } | null;
         supplier: {
             id: number;
+            createdAt: Date;
             name: string;
             nit: string;
             phone: string | null;
             email: string | null;
             address: string | null;
-            createdAt: Date;
         };
         items: ({
             medicine: {
@@ -78,36 +78,36 @@ export declare class PurchasesController {
             id: number;
             purchasePrice: import("@prisma/client-runtime-utils").Decimal;
             salePrice: import("@prisma/client-runtime-utils").Decimal;
+            purchaseId: number;
             medicineId: string;
             quantity: number;
             expiryDate: Date | null;
             total: import("@prisma/client-runtime-utils").Decimal;
-            purchaseId: number;
         })[];
     } & {
         id: number;
         createdAt: Date | null;
+        userId: number | null;
         supplierId: number;
         invoiceNumber: string;
         date: Date;
-        userId: number | null;
     })[]>;
     findOne(id: number): Promise<{
         user: {
             id: number;
-            createdAt: Date | null;
             username: string;
             passwordHash: string;
             role: import("../generated/prisma/enums.js").UserRole;
+            createdAt: Date | null;
         } | null;
         supplier: {
             id: number;
+            createdAt: Date;
             name: string;
             nit: string;
             phone: string | null;
             email: string | null;
             address: string | null;
-            createdAt: Date;
         };
         items: ({
             medicine: {
@@ -126,18 +126,18 @@ export declare class PurchasesController {
             id: number;
             purchasePrice: import("@prisma/client-runtime-utils").Decimal;
             salePrice: import("@prisma/client-runtime-utils").Decimal;
+            purchaseId: number;
             medicineId: string;
             quantity: number;
             expiryDate: Date | null;
             total: import("@prisma/client-runtime-utils").Decimal;
-            purchaseId: number;
         })[];
     } & {
         id: number;
         createdAt: Date | null;
+        userId: number | null;
         supplierId: number;
         invoiceNumber: string;
         date: Date;
-        userId: number | null;
     }>;
 }

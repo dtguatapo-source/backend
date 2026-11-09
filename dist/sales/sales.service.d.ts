@@ -26,19 +26,19 @@ export declare class SalesService {
             id: number;
             medicineId: string;
             quantity: number;
+            saleId: number;
             unitPrice: import("@prisma/client-runtime-utils").Decimal;
             subtotal: import("@prisma/client-runtime-utils").Decimal;
-            saleId: number;
         })[];
     } & {
         id: number;
-        date: Date | null;
         userId: number | null;
+        date: Date | null;
         total: import("@prisma/client-runtime-utils").Decimal;
         customerId: number | null;
-        discount: import("@prisma/client-runtime-utils").Decimal | null;
         customerName: string | null;
         customerIdNumber: string | null;
+        discount: import("@prisma/client-runtime-utils").Decimal | null;
     }>;
     findAll(): Promise<({
         customer: {
@@ -63,19 +63,19 @@ export declare class SalesService {
             id: number;
             medicineId: string;
             quantity: number;
+            saleId: number;
             unitPrice: import("@prisma/client-runtime-utils").Decimal;
             subtotal: import("@prisma/client-runtime-utils").Decimal;
-            saleId: number;
         })[];
     } & {
         id: number;
-        date: Date | null;
         userId: number | null;
+        date: Date | null;
         total: import("@prisma/client-runtime-utils").Decimal;
         customerId: number | null;
-        discount: import("@prisma/client-runtime-utils").Decimal | null;
         customerName: string | null;
         customerIdNumber: string | null;
+        discount: import("@prisma/client-runtime-utils").Decimal | null;
     })[]>;
     findOne(id: number): Promise<{
         customer: {
@@ -100,18 +100,18 @@ export declare class SalesService {
             id: number;
             medicineId: string;
             quantity: number;
+            saleId: number;
             unitPrice: import("@prisma/client-runtime-utils").Decimal;
             subtotal: import("@prisma/client-runtime-utils").Decimal;
-            saleId: number;
         })[];
     } & {
         id: number;
-        date: Date | null;
         userId: number | null;
+        date: Date | null;
         total: import("@prisma/client-runtime-utils").Decimal;
         customerId: number | null;
-        discount: import("@prisma/client-runtime-utils").Decimal | null;
         customerName: string | null;
         customerIdNumber: string | null;
+        discount: import("@prisma/client-runtime-utils").Decimal | null;
     }>;
 }

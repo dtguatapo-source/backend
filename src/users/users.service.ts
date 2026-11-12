@@ -2,6 +2,7 @@ import { BadRequestException, ConflictException, Injectable } from '@nestjs/comm
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hashPassword } from '../auth/password';
+import { UserRole } from '../generated/prisma/enums.js';
 
 @Injectable()
 export class UsersService {
@@ -28,10 +29,13 @@ export class UsersService {
     const passwordHash = await hashPassword(password);
 
     // 4. Crear el usuario en Prisma (sin guardar confirmPassword)
+    // El registro es público: nunca crea un administrador. El rol ADMIN se asigna
+    // a propósito en la base, jamás desde una petición anónima.
     const user = await this.prisma.user.create({
       data: {
         username,
         passwordHash,
+        role: UserRole.USER,
       },
     });
 

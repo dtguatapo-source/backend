@@ -45,7 +45,7 @@ describe('RolesGuard', () => {
     const guard = new RolesGuard(reflectorConRoles(['ADMIN']));
 
     expect(() =>
-      guard.canActivate(contextoConUsuario({ id: 2, username: 'beto', role: 'CAJERO' }))
+      guard.canActivate(contextoConUsuario({ id: 2, username: 'beto', role: 'USER' }))
     ).toThrow(ForbiddenException);
   });
 
@@ -56,9 +56,9 @@ describe('RolesGuard', () => {
   });
 
   it('admite una lista de roles', () => {
-    const guard = new RolesGuard(reflectorConRoles(['ADMIN', 'CAJERO']));
+    const guard = new RolesGuard(reflectorConRoles(['ADMIN', 'USER']));
 
-    expect(guard.canActivate(contextoConUsuario({ id: 3, username: 'carla', role: 'CAJERO' }))).toBe(
+    expect(guard.canActivate(contextoConUsuario({ id: 3, username: 'carla', role: 'USER' }))).toBe(
       true
     );
   });

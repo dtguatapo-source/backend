@@ -1,20 +1,34 @@
-import { GUARDS_METADATA } from '@nestjs/common/constants';
+import { APP_GUARD } from '@nestjs/core';
 import type { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { IS_PUBLIC_KEY } from './decorators/public.decorator';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AppModule } from '../app.module';
 
-describe('Auth guard wiring (S3, S4)', () => {
-  it('JwtAuthGuard is instantiable', () => {
-    expect(new JwtAuthGuard()).toBeDefined();
-  });
+/** Providers declarados por un módulo, sin levantar la aplicación. */
+function providersDe(modulo: object): unknown[] {
+  return (Reflect.getMetadata('providers', modulo) as unknown[]) ?? [];
+}
 
-  it('protects GET /auth/me with JwtAuthGuard', () => {
-    const guards = Reflect.getMetadata(
-      GUARDS_METADATA,
-      AuthController.prototype.me,
+describe('Auth guard wiring', () => {
+  it('registers JwtAuthGuard as the global APP_GUARD', () => {
+    const globales = providersDe(AppModule).filter(
+      (provider) =>
+        typeof provider === 'object' &&
+        provider !== null &&
+        (provider as { provide?: unknown }).provide === APP_GUARD,
     );
 
-    expect(guards).toContain(JwtAuthGuard);
+    expect(globales).toHaveLength(1);
+    expect((globales[0] as { useClass?: unknown }).useClass).toBe(JwtAuthGuard);
+  });
+
+  it('leaves POST /auth/login public so a user can obtain a token', () => {
+    expect(Reflect.getMetadata(IS_PUBLIC_KEY, AuthController.prototype.login)).toBe(true);
+  });
+
+  it('does not mark GET /auth/me public, so the global guard protects it', () => {
+    expect(Reflect.getMetadata(IS_PUBLIC_KEY, AuthController.prototype.me)).toBeUndefined();
   });
 
   it('returns the authenticated user from me()', () => {

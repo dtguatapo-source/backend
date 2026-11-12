@@ -12,6 +12,7 @@ import { SalesModule } from './sales/sales.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
 import { ReportsModule } from './reports/reports.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
@@ -33,7 +34,9 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     AppService,
     // Toda la API queda cerrada por defecto: solo las rutas con @Public()
     // pasan sin token, y un controlador nuevo nace protegido.
-    { provide: APP_GUARD, useClass: JwtAuthGuard }
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    // Después del de JWT: primero se valida el token y recién ahí el rol
+    { provide: APP_GUARD, useClass: RolesGuard }
   ]
 })
 export class AppModule {}

@@ -10,7 +10,10 @@ import {
 } from '@nestjs/common';
 import { CreatePurchaseDto } from './dto/create-purchase.dto.js';
 import { PurchasesService } from './purchases.service.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
+// Las compras mueven stock y costos: solo administración
+@Roles('ADMIN')
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}

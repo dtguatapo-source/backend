@@ -13,7 +13,10 @@ import {
 import { SuppliersService } from './suppliers.service.js';
 import { CreateSupplierDto } from './dto/create-supplier.dto.js';
 import { UpdateSupplierDto } from './dto/update-supplier.dto.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
+// Los proveedores son datos maestros: solo administración
+@Roles('ADMIN')
 @Controller('suppliers')
 export class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}

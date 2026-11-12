@@ -1,6 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 import { ReportsService } from './reports.service';
+import { Roles } from '../auth/decorators/roles.decorator';
 
+// Los informes exponen ingresos, inversión y balance: solo administración
+@Roles('ADMIN')
 @Controller('reports')
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}

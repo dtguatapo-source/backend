@@ -31,6 +31,44 @@
 $ npm install
 ```
 
+## Requirements
+
+This API **requires a running PostgreSQL database**. It cannot start without one:
+`PrismaService` throws at boot when `DATABASE_URL` is missing or unreachable.
+
+Copy `.env.example` to `.env` and fill in:
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `DATABASE_URL` | yes | PostgreSQL connection string, e.g. `postgresql://user:pass@localhost:5432/db` |
+| `JWT_SECRET` | yes | Secret used to sign JWTs; the app refuses to start without it |
+| `PORT` | no | HTTP port, defaults to `3000` |
+| `CORS_ORIGIN` | no | Allowed origins, comma separated; defaults to `http://localhost:4200` |
+
+## Database
+
+The schema lives in `prisma/schema.prisma` and the migrations in `prisma/migrations`.
+
+```bash
+# create/update the local database during development
+$ npx prisma migrate dev
+
+# apply already-committed migrations to an existing database
+$ npx prisma migrate deploy
+```
+
+## Docker
+
+```bash
+$ docker build -t drugstore-api .
+$ docker run --env-file .env -p 3000:3000 drugstore-api
+```
+
+The image runs `node dist/main` with production dependencies only, because the build stage
+does `npm prune --omit=dev`. The Prisma CLI is a dev dependency and is therefore **not**
+present in the image: run `npx prisma migrate deploy` as a separate release step (locally or
+in CI) before starting a new container against a migrated database.
+
 ## Compile and run the project
 
 ```bash

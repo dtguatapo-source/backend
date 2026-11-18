@@ -5,3 +5,7 @@ node_modules
 /generated/prisma
 # Local Pi runtime state
 .atl/
+
+# Artefactos de build: se regeneran con npm run build y no se versionan.
+/dist
+*.tsbuildinfo

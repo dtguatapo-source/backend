@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 dotenv.config();
 dotenv.config({ path: '../.env', override: false });
 import { AppModule, ObserveInstrument } from './app.module.js';
+import { getCorsOrigins } from './cors.config.js';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -19,9 +20,10 @@ async function bootstrap() {
     }),
   );
 
-  // 👉 AGREGA ESTA LÍNEA AQUÍ:
+  // Orígenes permitidos por entorno: en local cae en http://localhost:4200 y en
+  // producción se listan en CORS_ORIGIN separados por comas.
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: getCorsOrigins(),
     credentials: true,
   });
 

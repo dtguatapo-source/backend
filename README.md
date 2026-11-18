@@ -38,12 +38,13 @@ This API **requires a running PostgreSQL database**. It cannot start without one
 
 Copy `.env.example` to `.env` and fill in:
 
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `DATABASE_URL` | yes | PostgreSQL connection string, e.g. `postgresql://user:pass@localhost:5432/db` |
-| `JWT_SECRET` | yes | Secret used to sign JWTs; the app refuses to start without it |
-| `PORT` | no | HTTP port, defaults to `3000` |
-| `CORS_ORIGIN` | no | Allowed origins, comma separated; defaults to `http://localhost:4200` |
+| Variable       | Required | Purpose                                                                       |
+| -------------- | -------- | ----------------------------------------------------------------------------- |
+| `DATABASE_URL` | yes      | PostgreSQL connection string, e.g. `postgresql://user:pass@localhost:5432/db` |
+| `JWT_SECRET`   | yes      | Secret used to sign JWTs; the app refuses to start without it                 |
+| `PORT`         | no       | HTTP port, defaults to `3000`                                                 |
+| `CORS_ORIGIN`  | no       | Legacy alias: read only when `FRONTEND_URL` is unset or blank                 |
+| `FRONTEND_URL` | no       | Allowed origins, comma separated; defaults to `http://localhost:4200`         |
 
 ## Database
 

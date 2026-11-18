@@ -42,3 +42,9 @@ Alcance: backend NestJS. El trabajo de frontend de este mismo bloque vive en el 
 - **L3** — Decisión de diseño: la lista se resuelve en una función pura
   (`getCorsOrigins`) y no inline en `bootstrap`, para poder testearla; mismo patrón que
   `src/auth/jwt.config.ts`.
+- **L4** — Cambio de nombre primario por requisito externo: la guía del curso exige
+  `FRONTEND_URL`. `getCorsOrigins` ahora lee `FRONTEND_URL` primero y cae en `CORS_ORIGIN`
+  cuando la primera no está definida o viene en blanco, para no romper despliegues ni la
+  documentación ya escritas con el nombre anterior. El comodín se rechaza en cualquiera de
+  las dos y el mensaje nombra la variable que lo aportó. Verificado en vivo: con ambas
+  definidas sólo se permite `FRONTEND_URL`; con sólo `CORS_ORIGIN` se permite esa.

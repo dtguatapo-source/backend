@@ -48,8 +48,10 @@ Alcance: backend NestJS. El trabajo de frontend de este mismo bloque vive en el 
   (`src/cors.config.ts`); documentar `FRONTEND_URL` sería documentar una variable muerta.
 - **Docker no está instalado** en esta máquina (`docker: command not found`), así que el
   `docker build` / `docker run` no se ejecutó y la imagen no está probada.
-- **No existe `GET /health`** en el backend; la prueba de `/health` pedida no es posible
-  hasta que se agregue el endpoint.
+- **`GET /health` resuelto**: el backend no tenía endpoint de healthcheck y la prueba de
+  `/health` no era posible; ahora `AppController.getHealth` responde `{ status: 'ok' }` con
+  `@Public()` para quedar fuera del guard global de JWT. Verificado en vivo: `GET /health` →
+  200 sin token, mientras `/` y `/medicines` siguen respondiendo 401.
 
 ## Log
 

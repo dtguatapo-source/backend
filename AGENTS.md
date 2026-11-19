@@ -4,20 +4,20 @@ NestJS 12 + Prisma 7 (driver adapter) + PostgreSQL API for a drugstore: medicine
 
 ## Commands
 
-| Task | Command |
-| --- | --- |
-| Dev server (watch) | `npm run start:dev` — listens on `PORT ?? 3000` |
-| Build | `npm run build` (`nest build`, deletes `dist/`) |
-| Run built output | `npm run start:prod` (`node dist/main`) |
-| Lint | `npm run lint` → **oxlint** (there is no ESLint config in this repo) |
-| Format | `npm run format` → Prettier (`singleQuote`, `trailingComma: all`) |
-| Typecheck | `npx tsc --noEmit -p tsconfig.json` (no npm script exists for this) |
-| Unit tests | `npm test` → `vitest run` (`**/*.spec.ts`) |
-| One test file | `npx vitest run src/sales/sales.service.spec.ts` |
-| E2E tests | `npm run test:e2e` (separate config, `**/*.e2e-spec.ts`) |
-| Regenerate Prisma client | `npx prisma generate` |
-| New migration | `npx prisma migrate dev --name <name>` |
-| DB browser | `npx prisma studio` |
+| Task                     | Command                                                              |
+| ------------------------ | -------------------------------------------------------------------- |
+| Dev server (watch)       | `npm run start:dev` — listens on `PORT ?? 3000`                      |
+| Build                    | `npm run build` (`nest build`, deletes `dist/`)                      |
+| Run built output         | `npm run start:prod` (`node dist/main`)                              |
+| Lint                     | `npm run lint` → **oxlint** (there is no ESLint config in this repo) |
+| Format                   | `npm run format` → Prettier (`singleQuote`, `trailingComma: all`)    |
+| Typecheck                | `npx tsc --noEmit -p tsconfig.json` (no npm script exists for this)  |
+| Unit tests               | `npm test` → `vitest run` (`**/*.spec.ts`)                           |
+| One test file            | `npx vitest run src/sales/sales.service.spec.ts`                     |
+| E2E tests                | `npm run test:e2e` (separate config, `**/*.e2e-spec.ts`)             |
+| Regenerate Prisma client | `npx prisma generate`                                                |
+| New migration            | `npx prisma migrate dev --name <name>`                               |
+| DB browser               | `npx prisma studio`                                                  |
 
 Verification order used in this repo: `npm run lint` → `npx tsc --noEmit` → `npm test`. There is no CI workflow and no pre-commit hook.
 
@@ -56,7 +56,7 @@ When adding tests, supply a mock `PrismaService` or import `PrismaModule`; do no
 
 ## Repo oddities — do not "fix" blindly
 
-- `dist/` and `tsconfig.build.tsbuildinfo` are committed, so every `npm run build` produces git churn. Do not commit unrelated build output.
+- `/dist` and `*.tsbuildinfo` are gitignored and untracked: build output stays out of the repository and each `npm run build` leaves the tree clean.
 - `dist/backend/` and `dist/generated/prisma` are stale leftovers from an older layout (the project used to live in a `backend/` subfolder). `nest build` uses `tsconfig.build.json` (`rootDir: ./src`), so real output is flat in `dist/`; the root `tsconfig.json` has `rootDir: "../"`, so running bare `tsc` nests output under `dist/backend/`.
 
 ## Reference material

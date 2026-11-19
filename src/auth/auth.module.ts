@@ -4,6 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
+import { LoginThrottleGuard } from './guards/login-throttle.guard';
 import { getJwtSecret } from './jwt.config';
 import { PrismaModule } from '../prisma/prisma.module';
 
@@ -20,7 +21,7 @@ import { PrismaModule } from '../prisma/prisma.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, LoginThrottleGuard],
   exports: [AuthService],
 })
 export class AuthModule {}

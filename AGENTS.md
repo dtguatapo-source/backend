@@ -35,10 +35,9 @@ Verification order used in this repo: `npm run lint` → `npx tsc --noEmit` → 
 - Postgres is **remote** (Railway); credentials live in the gitignored `.env` as `DATABASE_URL`. `npx prisma migrate status` currently reports the schema up to date with the 4 migrations in `prisma/migrations`.
 - Never run `prisma migrate reset` or `db push` — that wipes the shared remote database. Use `prisma migrate dev` for schema changes.
 
-## Tests: most spec files are broken Nest CLI boilerplate
+## Tests
 
-`npm test` currently fails: 6 of 7 spec files instantiate services/controllers without providing `PrismaService`, so Nest raises `can't resolve dependencies of the SalesService (?)`. Only `src/app.controller.spec.ts` passes. `npm run test:e2e` passes (it boots the real `AppModule` against the live DB, so it needs DB connectivity).
-When adding tests, supply a mock `PrismaService` or import `PrismaModule`; do not add more scaffolding-style specs. Vitest globals are enabled (`describe`/`it`/`expect` need no import).
+`npm test` (vitest) covers `**/*.spec.ts` and does not need the database: unit specs that need data must supply a stub `PrismaService`. `src/auth/access-control.spec.ts` is the reference (a `Proxy`-based stub, so the guard chain is exercised over the real `AppModule` without touching the remote database). Do not add scaffolding-style specs that instantiate a service without its dependencies, and never point a test at the live remote database for writes. `npm run test:e2e` boots the real `AppModule`, so it **needs `DATABASE_URL` and connectivity to the remote database**. Vitest globals are enabled (`describe`/`it`/`expect` need no import).
 
 ## Layout and conventions
 
@@ -48,7 +47,7 @@ When adding tests, supply a mock `PrismaService` or import `PrismaModule`; do no
 - `EstadoMedicamento` is defined twice: `prisma/schema.prisma` and `src/medicines/dto/create-medicine.dto.ts` (the DTO copy is what request validation uses). Keep both in sync.
 - Business rules live in services, not controllers: creating a sale validates stock, decrements it and flips status to `AGOTADO` inside `prisma.$transaction`; creating a purchase increments stock and sets `DISPONIBLE`.
 - The global `ValidationPipe({ whitelist: true, transform: true })` strips unknown body properties, so DTOs must declare every accepted field; use class-validator decorators plus `@Type()` for nested objects.
-- Auth: `JwtModule` is registered globally with a **hardcoded fallback secret** (`llave_secreta_para_desarrollo`, 15m expiry); `JWT_SECRET` is only used if set and is not in `.env`. **No route is protected** — there is no guard yet, so do not assume the API is authenticated.
+- Auth: `JwtModule` is registered globally (15m expiry) and `getJwtSecret()` makes `JWT_SECRET` **mandatory** — the app throws at startup when it is unset. `JwtAuthGuard` is registered as `APP_GUARD`, so **the whole API is closed by default**: only routes marked `@Public()` bypass it (`GET /health`, `POST /auth/login`, `POST /users`). `GET /auth/me` deliberately has no `@Public()` and returns the authenticated user. There is **no role-based authorization**: the drugstore has a single owner/administrator, so any valid JWT reaches every module (no `RolesGuard`, no `@Roles()` decorator, and `role` survives only as a JWT/`User` field).
 - Passwords use scrypt (`src/auth/password.ts`), stored as `scrypt$16384$8$1$salt$key`.
 - CORS origin is hardcoded to `http://localhost:4200` in `src/main.ts`; change it there when the frontend moves.
 - `src/main.ts` loads dotenv twice (`.` then `../.env`) so the app also boots from a parent folder containing `backend/`. Keep both calls if you edit it.

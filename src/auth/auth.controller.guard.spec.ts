@@ -3,7 +3,6 @@ import type { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { IS_PUBLIC_KEY } from './decorators/public.decorator';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { RolesGuard } from './guards/roles.guard';
 import { AppModule } from '../app.module';
 
 /** Providers declarados por un módulo, sin levantar la aplicación. */
@@ -12,7 +11,7 @@ function providersDe(modulo: object): unknown[] {
 }
 
 describe('Auth guard wiring', () => {
-  it('registers the JWT guard first and the roles guard right after it', () => {
+  it('registers the JWT guard as the only global guard', () => {
     const globales = providersDe(AppModule)
       .filter(
         (provider) =>
@@ -22,8 +21,8 @@ describe('Auth guard wiring', () => {
       )
       .map((provider) => (provider as { useClass?: unknown }).useClass);
 
-    // El orden importa: el rol se evalúa sobre el usuario que llenó el de JWT
-    expect(globales).toEqual([JwtAuthGuard, RolesGuard]);
+    // Una sola administradora: el acceso depende del JWT, no del rol
+    expect(globales).toEqual([JwtAuthGuard]);
   });
 
   it('leaves POST /auth/login public so a user can obtain a token', () => {

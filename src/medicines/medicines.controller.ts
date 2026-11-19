@@ -12,15 +12,13 @@ import {
 import { MedicinesService } from './medicines.service.js';
 import { CreateMedicineDto } from './dto/create-medicine.dto.js';
 import { UpdateMedicineDto } from './dto/update-medicine.dto.js';
-import { Roles } from '../auth/decorators/roles.decorator.js';
 
-// Lectura abierta a cualquier usuario autenticado (el cajero busca productos),
-// escritura reservada a administración.
+// Cualquier usuario autenticado puede operar el inventario: la droguería tiene
+// una sola administradora, así que no hay restricciones por rol.
 @Controller('medicines')
 export class MedicinesController {
   constructor(private readonly medicinesService: MedicinesService) {}
 
-  @Roles('ADMIN')
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createMedicineDto: CreateMedicineDto) {
@@ -42,7 +40,6 @@ export class MedicinesController {
     return this.medicinesService.findOne(id);
   }
 
-  @Roles('ADMIN')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -51,7 +48,6 @@ export class MedicinesController {
     return this.medicinesService.update(id, updateMedicineDto);
   }
 
-  @Roles('ADMIN')
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {

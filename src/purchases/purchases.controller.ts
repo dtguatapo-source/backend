@@ -11,6 +11,8 @@ import {
 import { CreatePurchaseDto } from './dto/create-purchase.dto.js';
 import { PurchasesService } from './purchases.service.js';
 
+// Cualquier usuario autenticado puede registrar compras: la droguería tiene una
+// sola administradora, así que no hay restricciones por rol.
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchasesService: PurchasesService) {}

@@ -16,11 +16,15 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/ (GET) queda cerrada sin token: la API está cerrada por defecto', () => {
+    return request(app.getHttpServer()).get('/').expect(401);
+  });
+
+  it('/health (GET) responde 200 sin token porque está marcada como pública', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/health')
       .expect(200)
-      .expect('Hello World!');
+      .expect({ status: 'ok' });
   });
 
   afterEach(async () => {

@@ -13,6 +13,8 @@ import { MedicinesService } from './medicines.service.js';
 import { CreateMedicineDto } from './dto/create-medicine.dto.js';
 import { UpdateMedicineDto } from './dto/update-medicine.dto.js';
 
+// Cualquier usuario autenticado puede operar el inventario: la droguería tiene
+// una sola administradora, así que no hay restricciones por rol.
 @Controller('medicines')
 export class MedicinesController {
   constructor(private readonly medicinesService: MedicinesService) {}

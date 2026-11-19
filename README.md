@@ -31,6 +31,45 @@
 $ npm install
 ```
 
+## Requirements
+
+This API **requires a running PostgreSQL database**. It cannot start without one:
+`PrismaService` throws at boot when `DATABASE_URL` is missing or unreachable.
+
+Copy `.env.example` to `.env` and fill in:
+
+| Variable       | Required | Purpose                                                                       |
+| -------------- | -------- | ----------------------------------------------------------------------------- |
+| `DATABASE_URL` | yes      | PostgreSQL connection string, e.g. `postgresql://user:pass@localhost:5432/db` |
+| `JWT_SECRET`   | yes      | Secret used to sign JWTs; the app refuses to start without it                 |
+| `PORT`         | no       | HTTP port, defaults to `3000`                                                 |
+| `CORS_ORIGIN`  | no       | Legacy alias: read only when `FRONTEND_URL` is unset or blank                 |
+| `FRONTEND_URL` | no       | Allowed origins, comma separated; defaults to `http://localhost:4200`         |
+
+## Database
+
+The schema lives in `prisma/schema.prisma` and the migrations in `prisma/migrations`.
+
+```bash
+# create/update the local database during development
+$ npx prisma migrate dev
+
+# apply already-committed migrations to an existing database
+$ npx prisma migrate deploy
+```
+
+## Docker
+
+```bash
+$ docker build -t drugstore-api .
+$ docker run --env-file .env -p 3000:3000 drugstore-api
+```
+
+The image runs `node dist/main` with production dependencies only, because the build stage
+does `npm prune --omit=dev`. The Prisma CLI is a dev dependency and is therefore **not**
+present in the image: run `npx prisma migrate deploy` as a separate release step (locally or
+in CI) before starting a new container against a migrated database.
+
 ## Compile and run the project
 
 ```bash
@@ -59,16 +98,22 @@ $ npm run test:cov
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+The application ships as a container: the `Dockerfile` builds on `node:22-alpine`, prunes the
+dev dependencies and runs `node dist/main`. The **Docker** section above has the local build
+and run commands.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Environment variables required by the platform:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+- `DATABASE_URL` and `JWT_SECRET` — mandatory; the app refuses to start without them.
+- `FRONTEND_URL` — origin allowed by CORS (comma separated list for several origins).
+- `PORT` — optional, defaults to `3000`.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Two operational notes:
+
+- Apply migrations as a separate release step (`npx prisma migrate deploy`): the image does
+  not include the Prisma CLI, because it is pruned as a dev dependency.
+- The container exposes `GET /health`, which answers `200 { "status": "ok" }` without a token.
+  Point the platform healthcheck there.
 
 ## Observability
 

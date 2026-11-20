@@ -17,6 +17,7 @@ NestJS 12 + Prisma 7 (driver adapter) + PostgreSQL API for a drugstore: medicine
 | E2E tests                | `npm run test:e2e` (separate config, `**/*.e2e-spec.ts`)             |
 | Regenerate Prisma client | `npx prisma generate`                                                |
 | New migration            | `npx prisma migrate dev --name <name>`                               |
+| Seed owner account       | `npm run seed` — requires `OWNER_USERNAME` + `OWNER_PASSWORD`; builds and runs `dist/tools/seed-owner.js` (idempotent, no default password) |
 | DB browser               | `npx prisma studio`                                                  |
 
 Verification order used in this repo: `npm run lint` → `npx tsc --noEmit` → `npm test`. There is no CI workflow and no pre-commit hook.
@@ -47,7 +48,7 @@ Verification order used in this repo: `npm run lint` → `npx tsc --noEmit` → 
 - `EstadoMedicamento` is defined twice: `prisma/schema.prisma` and `src/medicines/dto/create-medicine.dto.ts` (the DTO copy is what request validation uses). Keep both in sync.
 - Business rules live in services, not controllers: creating a sale validates stock, decrements it and flips status to `AGOTADO` inside `prisma.$transaction`; creating a purchase increments stock and sets `DISPONIBLE`.
 - The global `ValidationPipe({ whitelist: true, transform: true })` strips unknown body properties, so DTOs must declare every accepted field; use class-validator decorators plus `@Type()` for nested objects.
-- Auth: `JwtModule` is registered globally (15m expiry) and `getJwtSecret()` makes `JWT_SECRET` **mandatory** — the app throws at startup when it is unset. `JwtAuthGuard` is registered as `APP_GUARD`, so **the whole API is closed by default**: only routes marked `@Public()` bypass it (`GET /health`, `POST /auth/login`, `POST /users`). `GET /auth/me` deliberately has no `@Public()` and returns the authenticated user. There is **no role-based authorization**: the drugstore has a single owner/administrator, so any valid JWT reaches every module (no `RolesGuard`, no `@Roles()` decorator, and `role` survives only as a JWT/`User` field).
+- Auth: `JwtModule` is registered globally (15m expiry) and `getJwtSecret()` makes `JWT_SECRET` **mandatory** — the app throws at startup when it is unset. `JwtAuthGuard` is registered as `APP_GUARD`, so **the whole API is closed by default**: only routes marked `@Public()` bypass it (`GET /health`, `POST /auth/login`). `GET /auth/me` and `POST /users` deliberately have no `@Public()`: `/auth/me` returns the authenticated user and registration is closed (the single owner account is created by the seed: `npm run seed`, env `OWNER_USERNAME`/`OWNER_PASSWORD`, scrypt hash, role `ADMIN`, idempotent). There is **no role-based authorization**: the drugstore has a single owner/administrator, so any valid JWT reaches every module (no `RolesGuard`, no `@Roles()` decorator, and `role` survives only as a JWT/`User` field).
 - Passwords use scrypt (`src/auth/password.ts`), stored as `scrypt$16384$8$1$salt$key`.
 - CORS origin is hardcoded to `http://localhost:4200` in `src/main.ts`; change it there when the frontend moves.
 - `src/main.ts` loads dotenv twice (`.` then `../.env`) so the app also boots from a parent folder containing `backend/`. Keep both calls if you edit it.

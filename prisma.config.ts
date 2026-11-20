@@ -7,6 +7,8 @@ export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
+    // `prisma db seed` corre el seed de la dueña/administradora desde dist.
+    seed: "npm run seed",
   },
   datasource: {
     url: process.env.DATABASE_URL,

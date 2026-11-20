@@ -44,7 +44,7 @@ function proveedoresDe(modulo: object): unknown[] {
   return (Reflect.getMetadata('providers', modulo) as unknown[]) ?? [];
 }
 
-function guardAplicadoA(handler: unknown): unknown[] | undefined {
+function guardAplicadoA(handler: object): unknown[] | undefined {
   return Reflect.getMetadata('__guards__', handler) as unknown[] | undefined;
 }
 

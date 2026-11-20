@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { IS_PUBLIC_KEY } from '../auth/decorators/public.decorator';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
@@ -19,6 +20,12 @@ describe('UsersController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('no queda pública: el registro exige un JWT válido', () => {
+    expect(
+      Reflect.getMetadata(IS_PUBLIC_KEY, UsersController.prototype.create)
+    ).toBeUndefined();
   });
 
   it('delegates the registration to the service', async () => {

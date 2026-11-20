@@ -22,10 +22,10 @@ describe('UsersController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('no queda pública: el registro exige un JWT válido', () => {
+  it('queda pública: el registro no exige JWT', () => {
     expect(
       Reflect.getMetadata(IS_PUBLIC_KEY, UsersController.prototype.create)
-    ).toBeUndefined();
+    ).toBe(true);
   });
 
   it('delegates the registration to the service', async () => {

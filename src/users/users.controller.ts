@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { Public } from '../auth/decorators/public.decorator';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -6,9 +7,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // Registro cerrado: la droguería tiene una sola dueña/administradora y su
-  // cuenta se siembra con `npm run seed`. Sin @Public() esta ruta pasa por el
-  // guard global de JWT, así que nadie puede auto-registrarse.
+  // Registro abierto: el DTO no acepta `role`, así que no permite crear un ADMIN.
+  // La cuenta de la dueña también puede crearse con `npm run seed`.
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
